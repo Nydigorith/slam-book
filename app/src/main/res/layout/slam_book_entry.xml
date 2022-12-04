@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp"
+    android:background="#e5e5e5"
+    >
+
+    <ImageView
+        android:id="@+id/entryPicture"
+        android:layout_width="100dp"
+        android:layout_height="110dp"
+        android:src="@mipmap/ic_launcher"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        >
+
+        <TextView
+            android:id="@+id/entryFullName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sample Title"
+            android:textColor="#555"
+            android:textSize="30sp"
+            android:textStyle="bold"
+
+            />
+        <TextView
+            android:id="@+id/entryRemark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lorem Ipsum dolor sit amet"
+            android:textColor="#555"
+            android:textSize="15sp"
+            android:textStyle="italic"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+        <Button
+            android:id="@+id/btnDeleteEntry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Del"
+            />
+            <Button
+                android:id="@+id/btnEditEntry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
