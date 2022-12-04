@@ -3,6 +3,7 @@ package com.example.slambook;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -156,12 +157,26 @@ public class EntryList extends AppCompatActivity {
             recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    entryList.remove(position);
-                    recyclerViewAdapter.notifyItemRemoved(position);
-                    Toast.makeText(c, "position", Toast.LENGTH_SHORT).show();
+//                    deletes data !! importatn
+//                    entryList.remove(position);
+
+//                    recyclerViewAdapter.notifyItemRemoved(position);
+
+
+//                     Bitmap arrayListPicture = (Bitmap) entryList.get(position).getEntryPicture();
+                    String arrayListRemark  = entryList.get(position).getEntryRemark();
+                  String arrayListFullName =  entryList.get(position).getEntryFullName();
+
+                    Intent putArrayListIntent = new Intent(c, IndividualEntry.class);
+                    putArrayListIntent.putExtra("entryListFullName", arrayListFullName);
+                    putArrayListIntent.putExtra("entryListRemark", arrayListRemark);
+                    startActivity(putArrayListIntent);
                 }
             });
 
+
+
         }
     }
+
 }
