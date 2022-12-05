@@ -20,8 +20,22 @@ Context c = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_entry);
     initialize();
-    }
 
+    }
+    private void intent() {
+        Intent getEntryListIntent = getIntent();
+        if(getEntryListIntent.hasExtra("entryListFullName") ) {
+//          && getEntryListIntent.hasExtra("entryListPicture")
+            String entryListFullName = getEntryListIntent.getStringExtra("entryListFullName");
+//            Bitmap entryListPicture = getEntryListIntent.getParcelableExtra("entryListPicture");
+
+            Intent addEntryIntent = new Intent(c, EntryList.class);
+            addEntryIntent.putExtra("loginFullName", entryListFullName);
+//           addEntryIntent.putExtra("loginFullName", entryListPicture);
+
+            startActivity(addEntryIntent);
+        }
+    }
     private void initialize() {
         txtName= findViewById(R.id.txtName);
         txtRemark= findViewById(R.id.txtRemark);
@@ -47,8 +61,7 @@ Context c = this;
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(c, EntryList.class);
-                startActivity(intent);
+                intent();
             }
         });
     }

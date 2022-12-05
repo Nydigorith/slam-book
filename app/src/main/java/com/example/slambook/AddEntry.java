@@ -187,7 +187,7 @@ public class AddEntry extends AppCompatActivity {
 
             putAddEntryIntent.putExtra("addEntryName", addEntryName);
             putAddEntryIntent.putExtra("addEntryRemark", addEntryRemark);
-         //   putAddEntryIntent.putExtra("addEntryBtmpPicture", addEntryBtmpPicture);
+            putAddEntryIntent.putExtra("addEntryBtmpPicture", addEntryBtmpPicture);
                         startActivity(putAddEntryIntent);
                     }
                 }

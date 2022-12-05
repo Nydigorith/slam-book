@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -101,11 +103,26 @@ public class EntryList extends AppCompatActivity {
 //&& getAddEntryIntent.hasExtra("addEntryBtmpPicture")
                 String addEntryName = getAddEntryIntent.getStringExtra("addEntryName");
                 String addEntryRemark = getAddEntryIntent.getStringExtra("addEntryRemark");
-//                Bitmap addEntryBtmpPicture = getAddEntryIntent.getParcelableExtra("addEntryBtmpPicture");
+
+              Bitmap addEntryBtmpPicture = getAddEntryIntent.getParcelableExtra("addEntryBtmpPicture");
+                Drawable drawableAddEntryBtmpPicture = new BitmapDrawable(getResources(), addEntryBtmpPicture);
+
+
+                ImageView imageView = new ImageView(c);
+           //     imageView.setImageBitmap(addEntryBtmpPicture);
+           //     Drawable dr = ((ImageView) imageView).getDrawable();
+
+
+
                 entryList.add(0, new Entry(R.drawable.coffee1, addEntryName, addEntryRemark));
+
+
+
+
                 //   recyclerViewAdapter.notifyItemInserted(0);
                 //               layoutManager.scrollToPosition(0);
                 Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
+
 
 
             } else {
@@ -168,9 +185,14 @@ public class EntryList extends AppCompatActivity {
                   String arrayListFullName =  entryList.get(position).getEntryFullName();
 
                     Intent putArrayListIntent = new Intent(c, IndividualEntry.class);
+
+                    putArrayListIntent.putExtra("entryListFullName", loginFullName);
+
                     putArrayListIntent.putExtra("entryListFullName", arrayListFullName);
                     putArrayListIntent.putExtra("entryListRemark", arrayListRemark);
                     startActivity(putArrayListIntent);
+
+
                 }
             });
 
