@@ -30,7 +30,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position, View v);
+        void onItemEditClicked(int position);
+        void onItemDeleteClicked(int position);
+        void onItemDisplayClicked(int position);
     }
 
 
@@ -52,7 +54,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder vh, int position) {
         Entry oneEntry = entryList.get(position);
-        vh.entryPicture.setImageResource(oneEntry.getEntryPicture());
+
+
+        vh.entryPicture.setImageBitmap(oneEntry.getEntryPicture());
         vh.entryFullName.setText(oneEntry.getEntryFullName());
         vh.entryRemark.setText(oneEntry.getEntryRemark());
 
@@ -86,80 +90,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             this.entryHobbies = convertView.findViewById(R.id.entryHobbies);
             this.entryBirthday = convertView.findViewById(R.id.entryBirthday);
 
-
-
             entryDelete = convertView.findViewById(R.id.btnDeleteEntry);
             entryEdit = convertView.findViewById(R.id.btnEditEntry);
-
-//            entryDelete.setOnClickListener(btnDeleteEntry);
-//            entryEdit.setOnClickListener(btnEditEntry);
-
-
 
             entryDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position, v);
-                        }
-                    }
+                    int position = getAdapterPosition();
+                    listener.onItemDeleteClicked(position);
                 }
             });
 
             entryEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position, v);
-                        }
-                    }
+                    int position = getAdapterPosition();
+                    listener.onItemEditClicked(position);
                 }
             });
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position, v);
-                        }
-                    }
+                    int position = getAdapterPosition();
+                    listener.onItemDisplayClicked(position);
                 }
             });
 
-
         }
 
-//        private View.OnClickListener btnDeleteEntry = new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                if (listener != null) {
-//                        int position = getAdapterPosition();
-//                        if (position != RecyclerView.NO_POSITION) {
-//                            listener.onItemClick(position);
-//
-//                        }
-//                    }
-//            }
-//        };
-//        private View.OnClickListener btnEditEntry = new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//                if (listener != null) {
-//                    int position = getAdapterPosition();
-//                    if (position != RecyclerView.NO_POSITION) {
-//                        listener.onItemClick(position);
-//
-//                    }
-//                }
-//            }
-//        };
     }
 }

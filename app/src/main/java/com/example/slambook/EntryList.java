@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -92,9 +93,12 @@ public class EntryList extends AppCompatActivity {
 
 
 //        displayed by default
-            entryList.add(new Entry(R.drawable.coffee1, "ds", "dsdsa","dsdsa","dsdsa","dsdsa"));
-            entryList.add(new Entry(R.drawable.coffee2, "ds2", "dsdsa2","dsdsa","dsdsa","dsdsa"));
-            entryList.add(new Entry(R.drawable.coffee2, "ds2", "dsdsa2","dsdsa","dsdsa","dsdsa"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.coffee2), "ds", "dsdsa","dsdsa","dsdsa","dsdsa"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.coffee2), "ds2", "dsdsa2","dsdsa","dsdsa","dsdsa"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.coffee2), "ds2", "dsdsa2","dsdsa","dsdsa","dsdsa"));
 
 
 
@@ -117,10 +121,11 @@ public class EntryList extends AppCompatActivity {
            //     Drawable dr = ((ImageView) imageView).getDrawable();
 
 if(addEntryBtmpPicture != null) {
-    entryList.add(0, new Entry(R.drawable.coffee1, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
+    entryList.add(0, new Entry(addEntryBtmpPicture, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
     // entryList.add(0, new Entry(R.drawable.coffee1, addEntryName, addEntryRemark,"dsdsa","dsdsa","dsdsa"));
 } else {
-    entryList.add(0, new Entry(R.drawable.no_picture, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
+    entryList.add(0, new Entry(BitmapFactory.decodeResource(c.getResources(),
+            R.drawable.no_picture), addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
 }
 
 
@@ -164,48 +169,41 @@ if(addEntryBtmpPicture != null) {
                 }
             });
 
-
             recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(int position, View v) {
-
-                    if (v.getId() == R.id.btnDeleteEntry) {
-                        entryList.remove(position);
-                   recyclerViewAdapter.notifyItemRemoved(position);
+                public void onItemEditClicked(int position) {
+                    Toast.makeText(c, "updated", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onItemDeleteClicked(int position) {
+                    entryList.remove(position);
+                    recyclerViewAdapter.notifyItemRemoved(position);
 //                    layoutManager.scrollToPosition(position);
+                }
+                public void onItemDisplayClicked(int position) {
+                    String arrayListRemark  = entryList.get(position).getEntryRemark();
+                    String arrayListFullName =  entryList.get(position).getEntryFullName();
 
-                    } else if (v.getId() == R.id.btnEditEntry) {
-                       // Bitmap arrayListPicture = (Bitmap) entryList.get(position).getEntryPicture();
-                        Toast.makeText(c, "dasdad", Toast.LENGTH_SHORT).show();
-                    } else {
+                    String arrayListGender =  entryList.get(position).getEntryGender();
+                    String arrayListBirthday  = entryList.get(position).getEntryBirthday();
+                    String arrayListHobbies =  entryList.get(position).getEntryHobbies();
 
-                        String arrayListRemark  = entryList.get(position).getEntryRemark();
-                        String arrayListFullName =  entryList.get(position).getEntryFullName();
+                    Intent putArrayListIntent = new Intent(c, IndividualEntry.class);
 
-                        String arrayListGender =  entryList.get(position).getEntryGender();
-                        String arrayListBirthday  = entryList.get(position).getEntryBirthday();
-                        String arrayListHobbies =  entryList.get(position).getEntryHobbies();
+                    putArrayListIntent.putExtra("loginFullName", loginFullName);
 
-                        Intent putArrayListIntent = new Intent(c, IndividualEntry.class);
+                    putArrayListIntent.putExtra("entryListFullName", arrayListFullName);
 
-                        putArrayListIntent.putExtra("loginFullName", loginFullName);
+                    putArrayListIntent.putExtra("entryListRemark", arrayListRemark);
+                    putArrayListIntent.putExtra("entryListGender", arrayListGender);
 
-                        putArrayListIntent.putExtra("entryListFullName", arrayListFullName);
-
-                        putArrayListIntent.putExtra("entryListRemark", arrayListRemark);
-                        putArrayListIntent.putExtra("entryListGender", arrayListGender);
-
-                        putArrayListIntent.putExtra("entryListBirthday", arrayListBirthday);
-                        putArrayListIntent.putExtra("entryListHobbies", arrayListHobbies);
-                        startActivity(putArrayListIntent);
-                    }
-
-
-
-
-
+                    putArrayListIntent.putExtra("entryListBirthday", arrayListBirthday);
+                    putArrayListIntent.putExtra("entryListHobbies", arrayListHobbies);
+                    startActivity(putArrayListIntent);
                 }
             });
+
+
 
 
 

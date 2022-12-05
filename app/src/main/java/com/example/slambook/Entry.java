@@ -1,14 +1,16 @@
 package com.example.slambook;
 
+import android.graphics.Bitmap;
+
 public class Entry {
-    private int entryPicture;
+    private Bitmap entryPicture;
     private String entryFullName;
     private String entryRemark;
     private String entryHobbies;
     private String entryGender;
     private String entryBirthday;
 
-    public Entry(int entryPicture, String entryFullName, String entryRemark,String entryHobbies, String entryGender, String entryBirthday) {
+    public Entry(Bitmap entryPicture, String entryFullName, String entryRemark,String entryHobbies, String entryGender, String entryBirthday) {
         this.setEntryPicture(entryPicture);
         this.setEntryFullName(entryFullName);
         this.setEntryRemark(entryRemark);
@@ -18,11 +20,11 @@ public class Entry {
     }
 
 
-    public int getEntryPicture() {
+    public Bitmap getEntryPicture() {
         return entryPicture;
     }
 
-    public void setEntryPicture(int entryPicture) {
+    public void setEntryPicture(Bitmap entryPicture) {
         this.entryPicture = entryPicture;
     }
 
