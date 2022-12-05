@@ -54,20 +54,6 @@ public class AddEntry extends AppCompatActivity {
 
     }
 
-    private void intent() {
-        Intent getEntryListIntent = getIntent();
-        if (getEntryListIntent.hasExtra("loginFullName")) {
-            String loginFullName = getEntryListIntent.getStringExtra("loginFullName");
-            Bitmap loginPicture = getEntryListIntent.getParcelableExtra("loginPicture");
-
-            Intent addEntryIntent = new Intent(c, EntryList.class);
-            addEntryIntent.putExtra("loginFullName", loginFullName);
-            addEntryIntent.putExtra("loginPicture", loginPicture);
-            startActivity(addEntryIntent);
-        } else {
-            Toast.makeText(c, "ds", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void initialize() {
         tvBirthdate = findViewById(R.id.tvBirthdate);
@@ -172,14 +158,9 @@ public class AddEntry extends AppCompatActivity {
                         hobbies += cbVideoGames.getText().toString() + "\n";
                     }
 
-                    Intent getEntryListIntent = getIntent();
-                    if (getEntryListIntent.hasExtra("loginFullName")) {
-                        String loginFullName = getEntryListIntent.getStringExtra("loginFullName");
-                        Bitmap loginPicture = getEntryListIntent.getParcelableExtra("loginPicture");
 
-                        Intent putAddEntryIntent = new Intent(c, EntryList.class);
-                        putAddEntryIntent.putExtra("loginFullName", loginFullName);
-                        putAddEntryIntent.putExtra("loginPicture", loginPicture);
+                        Intent putAddEntryIntent = new Intent();
+
 
                         putAddEntryIntent.putExtra("addEntryBirthday", addEntryBirthdate);
                         putAddEntryIntent.putExtra("addEntryHobbies", hobbies);
@@ -187,8 +168,9 @@ public class AddEntry extends AppCompatActivity {
                         putAddEntryIntent.putExtra("addEntryName", addEntryName);
                         putAddEntryIntent.putExtra("addEntryRemark", addEntryRemark);
                         putAddEntryIntent.putExtra("addEntryBtmpPicture", addEntryBtmpPicture);
-                        startActivity(putAddEntryIntent);
-                    }
+                        setResult(RESULT_OK,putAddEntryIntent);
+                        finish();
+
                 }
             }
         });
@@ -196,7 +178,7 @@ public class AddEntry extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent();
+                finish();
             }
         });
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
@@ -236,6 +218,7 @@ public class AddEntry extends AppCompatActivity {
 
         }
     };
+
 }
 
 

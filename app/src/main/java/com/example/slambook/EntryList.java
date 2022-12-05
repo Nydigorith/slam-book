@@ -26,7 +26,7 @@ public class EntryList extends AppCompatActivity {
     ImageView ivPicture;
     TextView txtFullName;
     Button btnLogout, btnDeleteEntry, btnEditEntry;
-
+final int ADD_ENTRY_REQUEST_CODE  =1;
     Button btnAddEntry;
     RecyclerView rvEntryList;
 
@@ -84,36 +84,14 @@ public class EntryList extends AppCompatActivity {
 
 
 //        displayed by default
-            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-                    R.drawable.coffee2), "ds", "dsdsa", "dsdsa", "dsdsa", "dsdsa"));
-            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-                    R.drawable.coffee2), "ds2", "dsdsa2", "dsdsa", "dsdsa", "dsdsa"));
-            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-                    R.drawable.coffee2), "ds2", "dsdsa2", "dsdsa", "dsdsa", "dsdsa"));
-
-
-            Intent getAddEntryIntent = getIntent();
-            if (getAddEntryIntent.hasExtra("addEntryName") && getAddEntryIntent.hasExtra("addEntryRemark")) {
-                String addEntryName = getAddEntryIntent.getStringExtra("addEntryName");
-                String addEntryRemark = getAddEntryIntent.getStringExtra("addEntryRemark");
-
-                String addBirthday = getAddEntryIntent.getStringExtra("addEntryBirthday");
-                String addEntryHobbies = getAddEntryIntent.getStringExtra("addEntryHobbies");
-                String addEntryGender = getAddEntryIntent.getStringExtra("addEntryGender");
-
-                Bitmap addEntryBtmpPicture = getAddEntryIntent.getParcelableExtra("addEntryBtmpPicture");
-
-                if (addEntryBtmpPicture != null) {
-                    entryList.add(0, new Entry(addEntryBtmpPicture, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
-
-                } else {
-                    entryList.add(0, new Entry(BitmapFactory.decodeResource(c.getResources(),
-                            R.drawable.no_picture), addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
-                }
-
-                Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
-            }
-
+//            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+//                    R.drawable.coffee2), "1", "dsdsa", "dsdsa", "dsdsa", "dsdsa"));
+//            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+//                    R.drawable.coffee2), "2", "dsdsa2", "dsdsa", "dsdsa", "dsdsa"));
+//            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+//                    R.drawable.coffee2), "3", "dsdsa2", "dsdsa", "dsdsa", "dsdsa"));
+//
+//
 
             entryList2 = (ArrayList<Entry>) entryList.clone();
             rvEntryList = findViewById(R.id.rvEntryList);
@@ -128,9 +106,8 @@ public class EntryList extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent putEntryListIntent = new Intent(c, AddEntry.class);
-                    putEntryListIntent.putExtra("loginFullName", loginFullName);
-                    putEntryListIntent.putExtra("loginPicture", loginPicture);
-                    startActivity(putEntryListIntent);
+
+                    startActivityForResult(putEntryListIntent,ADD_ENTRY_REQUEST_CODE);
 
                 }
             });
@@ -185,11 +162,41 @@ public class EntryList extends AppCompatActivity {
                     startActivity(putArrayListIntent);
 
                     recyclerViewAdapter.notifyItemInserted(0);
-//                    layoutManager.scrollToPosition(0);
+                    layoutManager.scrollToPosition(0);
                 }
             });
 
         }
     }
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_ENTRY_REQUEST_CODE && resultCode == RESULT_OK) {
+            if(data.hasExtra("addEntryName")) {
+                    String addEntryName = data.getStringExtra("addEntryName");
+                    String addEntryRemark = data.getStringExtra("addEntryRemark");
 
+                    String addBirthday = data.getStringExtra("addEntryBirthday");
+                    String addEntryHobbies = data.getStringExtra("addEntryHobbies");
+                    String addEntryGender = data.getStringExtra("addEntryGender");
+
+                    Bitmap addEntryBtmpPicture = data.getParcelableExtra("addEntryBtmpPicture");
+
+                    if (addEntryBtmpPicture != null) {
+                        entryList.add(0, new Entry(addEntryBtmpPicture, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
+
+                    } else {
+                        entryList.add( 0,new Entry(BitmapFactory.decodeResource(c.getResources(),
+                                R.drawable.no_picture), addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
+
+                    }
+                Toast.makeText(c, addEntryName+addEntryRemark+addBirthday+addEntryHobbies+addEntryGender+""+addEntryBtmpPicture, Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
+                recyclerViewAdapter.notifyItemInserted(0);
+                layoutManager.scrollToPosition(0);
+            }
+
+        }
+    }
 }
