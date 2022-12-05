@@ -29,6 +29,7 @@ public class Registration extends AppCompatActivity {
 
     Context c = this;
     static  final int REQUEST_IMAGE_CAPTURE = 1;
+    String months [] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     ImageView ivPicture;
     TextView tvBirthdate;
     EditText etxtUsername, etxtPassword, etxtConfirmPassword, etxtFirstName, etxtLastName,etxtMiddleName, etxtEmailAddress, etxtAddress, etxtContact, etxtOther, etxtBarangayAddress,etxtStreetAddress,etxtNumberAddress,etxtMunicipalityAddress,etxtProvinceAddress,sprAnswer1,sprAnswer2,sprAnswer3;
@@ -102,15 +103,14 @@ public class Registration extends AppCompatActivity {
         rbMale.setOnClickListener(getRadio);
         rbFemale.setOnClickListener(getRadio);
         rbOthers.setOnClickListener(getRadio);
-
-
     }
 
     private void process() {
         datePickerDialog = new DatePickerDialog(c, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datepicker, int year, int month, int dayofmonth) {
-                tvBirthdate.setText((month + 1) + "/" + dayofmonth + "/" + year);
+                tvBirthdate.setText(months[month] + " " + dayofmonth + ", " + year);
+//                tvBirthdate.setText((month + 1) + "/" + dayofmonth + "/" + year);
             }
         }, year, month, day);
 
@@ -154,9 +154,6 @@ public class Registration extends AppCompatActivity {
                 String answer1 = sprAnswer1.getText().toString();
                 String answer2 = sprAnswer2.getText().toString();
                 String answer3 = sprAnswer3.getText().toString();
-
-
-
 
                 String contact = etxtContact.getText().toString();
                 String gender = etxtOther.getText().toString();

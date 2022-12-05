@@ -19,7 +19,6 @@ public class Entry {
         this.setEntryBirthday(entryBirthday);
     }
 
-
     public Bitmap getEntryPicture() {
         return entryPicture;
     }
