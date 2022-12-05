@@ -21,6 +21,9 @@
         android:theme="@style/Theme.SlamBook"
         tools:targetApi="31">
         <activity
+            android:name=".EditEntry"
+            android:exported="false" />
+        <activity
             android:name=".IndividualEntry"
             android:exported="false" />
         <activity

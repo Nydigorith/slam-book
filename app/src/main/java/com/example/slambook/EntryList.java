@@ -83,15 +83,37 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
             });
 
 
-//        displayed by default
-//            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-//                    R.drawable.coffee2), "1", "dsdsa", "dsdsa", "dsdsa", "dsdsa"));
-//            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-//                    R.drawable.coffee2), "2", "dsdsa2", "dsdsa", "dsdsa", "dsdsa"));
-//            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-//                    R.drawable.coffee2), "3", "dsdsa2", "dsdsa", "dsdsa", "dsdsa"));
-//
-//
+  //      displayed by default
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.coffee2), "1", "dsdsa", "dsdsa", "dsdsa", "dsdsa"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.coffee2), "2", "dsdsa2", "dsdsa", "dsdsa", "dsdsa"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.coffee2), "3", "dsdsa2", "dsdsa", "dsdsa", "dsdsa"));
+
+            //edit
+            Intent getEditEntryIntent = getIntent();
+            if (getEditEntryIntent.hasExtra("editEntryName") && getEditEntryIntent.hasExtra("editEntryRemark")) {
+                String editEntryName = getEditEntryIntent.getStringExtra("editEntryName");
+                String editEntryRemark = getEditEntryIntent.getStringExtra("editEntryRemark");
+
+                String editBirthday = getEditEntryIntent.getStringExtra("editEntryBirthday");
+                String editEntryHobbies = getEditEntryIntent.getStringExtra("editEntryHobbies");
+                String editEntryGender = getEditEntryIntent.getStringExtra("editEntryGender");
+
+                Bitmap editEntryBtmpPicture = getEditEntryIntent.getParcelableExtra("editEntryBtmpPicture");
+
+                if (editEntryBtmpPicture != null) {
+                    entryList.set(0, new Entry(editEntryBtmpPicture, editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
+
+                } else {
+                    entryList.set(0, new Entry(BitmapFactory.decodeResource(c.getResources(),
+                            R.drawable.no_picture), editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
+                }
+
+                Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
+            }
+
 
             entryList2 = (ArrayList<Entry>) entryList.clone();
             rvEntryList = findViewById(R.id.rvEntryList);
@@ -115,7 +137,26 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
             recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemEditClicked(int position) {
-                    Toast.makeText(c, "updated", Toast.LENGTH_SHORT).show();
+                    Intent putEntryListIntent = new Intent(c, EditEntry.class);
+                    putEntryListIntent.putExtra("loginFullName", loginFullName);
+                    putEntryListIntent.putExtra("loginPicture", loginPicture);
+
+                    String arrayListRemark = entryList.get(position).getEntryRemark();
+                    String arrayListFullName = entryList.get(position).getEntryFullName();
+
+                    String arrayListGender = entryList.get(position).getEntryGender();
+                    String arrayListBirthday = entryList.get(position).getEntryBirthday();
+                    String arrayListHobbies = entryList.get(position).getEntryHobbies();
+
+                    putEntryListIntent.putExtra("entryListFullName", arrayListFullName);
+                    putEntryListIntent.putExtra("entryListPosition", position);
+                    putEntryListIntent.putExtra("entryListRemark", arrayListRemark);
+                    putEntryListIntent.putExtra("entryListGender", arrayListGender);
+
+                    putEntryListIntent.putExtra("entryListBirthday", arrayListBirthday);
+                    putEntryListIntent.putExtra("entryListHobbies", arrayListHobbies);
+
+                    startActivity(putEntryListIntent);
                 }
 
                 @Override
