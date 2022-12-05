@@ -50,8 +50,18 @@ Context c = this;
             String individualEntryFullName = getArrayListIntent.getStringExtra("entryListFullName");
             String individualEntryRemark = getArrayListIntent.getStringExtra("entryListRemark");
 
+            String individualEntryGender = getArrayListIntent.getStringExtra("entryListGender");
+            String individualEntryHobbies = getArrayListIntent.getStringExtra("entryListHobbies");
+            String individualEntryBirthday = getArrayListIntent.getStringExtra("entryListBirthday");
+
+
             txtName.setText(individualEntryFullName);
             txtRemark.setText(individualEntryRemark);
+
+            txtBirthday.setText(individualEntryBirthday);
+            txtHobbies.setText(individualEntryHobbies);
+            txtGender.setText(individualEntryGender);
+
 
 
         } else {

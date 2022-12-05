@@ -185,6 +185,10 @@ public class AddEntry extends AppCompatActivity {
                     //   putIntent.putExtra("loginPicture", entryListPicture);
 
 
+
+            putAddEntryIntent.putExtra("addEntryBirthday", addEntryBirthdate);
+            putAddEntryIntent.putExtra("addEntryHobbies", hobbies);
+            putAddEntryIntent.putExtra("addEntryGender", addEntryGender);
             putAddEntryIntent.putExtra("addEntryName", addEntryName);
             putAddEntryIntent.putExtra("addEntryRemark", addEntryRemark);
             putAddEntryIntent.putExtra("addEntryBtmpPicture", addEntryBtmpPicture);

@@ -30,7 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(int position, View v);
     }
 
 
@@ -55,6 +55,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         vh.entryPicture.setImageResource(oneEntry.getEntryPicture());
         vh.entryFullName.setText(oneEntry.getEntryFullName());
         vh.entryRemark.setText(oneEntry.getEntryRemark());
+
+        vh.entryGender.setText(oneEntry.getEntryGender());
+        vh.entryHobbies.setText(oneEntry.getEntryHobbies());
+        vh.entryBirthday.setText(oneEntry.getEntryBirthday());
+
     }
 
     @Override
@@ -67,57 +72,94 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView entryPicture;
         TextView entryFullName;
         TextView entryRemark;
+        TextView entryGender;
+        TextView entryHobbies;
+        TextView entryBirthday;
+
 
         public ViewHolder(@NonNull View convertView) {
             super(convertView);
             this.entryPicture = convertView.findViewById(R.id.entryPicture);
             this.entryFullName = convertView.findViewById(R.id.entryFullName);
             this.entryRemark = convertView.findViewById(R.id.entryRemark);
+            this.entryGender = convertView.findViewById(R.id.entryGender);
+            this.entryHobbies = convertView.findViewById(R.id.entryHobbies);
+            this.entryBirthday = convertView.findViewById(R.id.entryBirthday);
+
+
+
             entryDelete = convertView.findViewById(R.id.btnDeleteEntry);
             entryEdit = convertView.findViewById(R.id.btnEditEntry);
 
-            entryDelete.setOnClickListener(btnDeleteEntry);
-            entryEdit.setOnClickListener(btnEditEntry);
-//            entryDelete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (listener != null) {
-//                        int position = getAdapterPosition();
-//                        if (position != RecyclerView.NO_POSITION) {
-//                            listener.onItemClick(position);
-//                        }
-//                    }
-//                }
-//            });
+//            entryDelete.setOnClickListener(btnDeleteEntry);
+//            entryEdit.setOnClickListener(btnEditEntry);
+
+
+
+            entryDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position, v);
+                        }
+                    }
+                }
+            });
+
+            entryEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position, v);
+                        }
+                    }
+                }
+            });
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position, v);
+                        }
+                    }
+                }
+            });
 
 
         }
 
-        private View.OnClickListener btnDeleteEntry = new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-
-                        }
-                    }
-            }
-        };
-        private View.OnClickListener btnEditEntry = new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (listener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(position);
-
-                    }
-                }
-            }
-        };
+//        private View.OnClickListener btnDeleteEntry = new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                if (listener != null) {
+//                        int position = getAdapterPosition();
+//                        if (position != RecyclerView.NO_POSITION) {
+//                            listener.onItemClick(position);
+//
+//                        }
+//                    }
+//            }
+//        };
+//        private View.OnClickListener btnEditEntry = new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                if (listener != null) {
+//                    int position = getAdapterPosition();
+//                    if (position != RecyclerView.NO_POSITION) {
+//                        listener.onItemClick(position);
+//
+//                    }
+//                }
+//            }
+//        };
     }
 }

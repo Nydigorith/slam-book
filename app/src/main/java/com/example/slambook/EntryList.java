@@ -92,9 +92,9 @@ public class EntryList extends AppCompatActivity {
 
 
 //        displayed by default
-            entryList.add(new Entry(R.drawable.coffee1, "ds", "dsdsa"));
-            entryList.add(new Entry(R.drawable.coffee2, "ds2", "dsdsa2"));
-            entryList.add(new Entry(R.drawable.coffee2, "ds2", "dsdsa2"));
+            entryList.add(new Entry(R.drawable.coffee1, "ds", "dsdsa","dsdsa","dsdsa","dsdsa"));
+            entryList.add(new Entry(R.drawable.coffee2, "ds2", "dsdsa2","dsdsa","dsdsa","dsdsa"));
+            entryList.add(new Entry(R.drawable.coffee2, "ds2", "dsdsa2","dsdsa","dsdsa","dsdsa"));
 
 
 
@@ -104,6 +104,10 @@ public class EntryList extends AppCompatActivity {
                 String addEntryName = getAddEntryIntent.getStringExtra("addEntryName");
                 String addEntryRemark = getAddEntryIntent.getStringExtra("addEntryRemark");
 
+                String addBirthday = getAddEntryIntent.getStringExtra("addEntryBirthday");
+                String addEntryHobbies = getAddEntryIntent.getStringExtra("addEntryHobbies");
+                String addEntryGender = getAddEntryIntent.getStringExtra("addEntryGender");
+
               Bitmap addEntryBtmpPicture = getAddEntryIntent.getParcelableExtra("addEntryBtmpPicture");
                 Drawable drawableAddEntryBtmpPicture = new BitmapDrawable(getResources(), addEntryBtmpPicture);
 
@@ -112,10 +116,12 @@ public class EntryList extends AppCompatActivity {
            //     imageView.setImageBitmap(addEntryBtmpPicture);
            //     Drawable dr = ((ImageView) imageView).getDrawable();
 
-
-
-                entryList.add(0, new Entry(R.drawable.coffee1, addEntryName, addEntryRemark));
-
+if(addEntryBtmpPicture != null) {
+    entryList.add(0, new Entry(R.drawable.coffee1, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
+    // entryList.add(0, new Entry(R.drawable.coffee1, addEntryName, addEntryRemark,"dsdsa","dsdsa","dsdsa"));
+} else {
+    entryList.add(0, new Entry(R.drawable.no_picture, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
+}
 
 
 
@@ -151,9 +157,6 @@ public class EntryList extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-
-
-
                     Intent putEntryListIntent = new Intent(c, AddEntry.class);
                     putEntryListIntent.putExtra("entryListFullName", loginFullName);
 //                    putEntryListIntent.putExtra("entryListPicture", loginPicture);
@@ -161,36 +164,44 @@ public class EntryList extends AppCompatActivity {
                 }
             });
 
-//            recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
-//                @Override
-//                public void onItemLongClick(int position) {
-//                    entryList.remove(position);
-//                    recyclerViewAdapter.notifyItemRemoved(position);
-//                    layoutManager.scrollToPosition(position);
-//                    Toast.makeText(c, "Item Deleted", Toast.LENGTH_SHORT).show();
-//                }
-//            });
 
             recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(int position) {
-//                    deletes data !! importatn
-//                    entryList.remove(position);
+                public void onItemClick(int position, View v) {
 
-//                    recyclerViewAdapter.notifyItemRemoved(position);
+                    if (v.getId() == R.id.btnDeleteEntry) {
+                        entryList.remove(position);
+                   recyclerViewAdapter.notifyItemRemoved(position);
+//                    layoutManager.scrollToPosition(position);
+
+                    } else if (v.getId() == R.id.btnEditEntry) {
+                       // Bitmap arrayListPicture = (Bitmap) entryList.get(position).getEntryPicture();
+                        Toast.makeText(c, "dasdad", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        String arrayListRemark  = entryList.get(position).getEntryRemark();
+                        String arrayListFullName =  entryList.get(position).getEntryFullName();
+
+                        String arrayListGender =  entryList.get(position).getEntryGender();
+                        String arrayListBirthday  = entryList.get(position).getEntryBirthday();
+                        String arrayListHobbies =  entryList.get(position).getEntryHobbies();
+
+                        Intent putArrayListIntent = new Intent(c, IndividualEntry.class);
+
+                        putArrayListIntent.putExtra("loginFullName", loginFullName);
+
+                        putArrayListIntent.putExtra("entryListFullName", arrayListFullName);
+
+                        putArrayListIntent.putExtra("entryListRemark", arrayListRemark);
+                        putArrayListIntent.putExtra("entryListGender", arrayListGender);
+
+                        putArrayListIntent.putExtra("entryListBirthday", arrayListBirthday);
+                        putArrayListIntent.putExtra("entryListHobbies", arrayListHobbies);
+                        startActivity(putArrayListIntent);
+                    }
 
 
-//                     Bitmap arrayListPicture = (Bitmap) entryList.get(position).getEntryPicture();
-                    String arrayListRemark  = entryList.get(position).getEntryRemark();
-                  String arrayListFullName =  entryList.get(position).getEntryFullName();
 
-                    Intent putArrayListIntent = new Intent(c, IndividualEntry.class);
-
-                    putArrayListIntent.putExtra("entryListFullName", loginFullName);
-
-                    putArrayListIntent.putExtra("entryListFullName", arrayListFullName);
-                    putArrayListIntent.putExtra("entryListRemark", arrayListRemark);
-                    startActivity(putArrayListIntent);
 
 
                 }
