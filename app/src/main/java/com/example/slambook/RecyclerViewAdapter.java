@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +20,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     int layout;
     ArrayList<Entry> entryList;
     OnItemClickListener listener;
-    Button entryDelete;
+    Button entryDelete,entryEdit;
 
 
     public RecyclerViewAdapter(Context context, int layout, ArrayList<Entry> entryList) {
@@ -29,10 +30,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemEditClicked(int position);
+        void onItemDeleteClicked(int position);
+        void onItemDisplayClicked(int position);
     }
-
-
 
 
     public void setOnItemClickListener(OnItemClickListener clickListener) {
@@ -44,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View convertView = inflater.inflate(layout,parent, false);
+        View convertView = inflater.inflate(layout, parent, false);
         ViewHolder vh = new ViewHolder(convertView);
 
         return vh;
@@ -53,9 +54,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder vh, int position) {
         Entry oneEntry = entryList.get(position);
-        vh.entryPicture.setImageResource(oneEntry.getEntryPicture());
+
+
+        vh.entryPicture.setImageBitmap(oneEntry.getEntryPicture());
         vh.entryFullName.setText(oneEntry.getEntryFullName());
         vh.entryRemark.setText(oneEntry.getEntryRemark());
+
+        vh.entryGender.setText(oneEntry.getEntryGender());
+        vh.entryHobbies.setText(oneEntry.getEntryHobbies());
+        vh.entryBirthday.setText(oneEntry.getEntryBirthday());
+
     }
 
     @Override
@@ -68,24 +76,48 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView entryPicture;
         TextView entryFullName;
         TextView entryRemark;
+        TextView entryGender;
+        TextView entryHobbies;
+        TextView entryBirthday;
+
+
         public ViewHolder(@NonNull View convertView) {
             super(convertView);
             this.entryPicture = convertView.findViewById(R.id.entryPicture);
             this.entryFullName = convertView.findViewById(R.id.entryFullName);
             this.entryRemark = convertView.findViewById(R.id.entryRemark);
-entryDelete = convertView.findViewById(R.id.btnDeleteEntry);
+            this.entryGender = convertView.findViewById(R.id.entryGender);
+            this.entryHobbies = convertView.findViewById(R.id.entryHobbies);
+            this.entryBirthday = convertView.findViewById(R.id.entryBirthday);
+
+            entryDelete = convertView.findViewById(R.id.btnDeleteEntry);
+            entryEdit = convertView.findViewById(R.id.btnEditEntry);
 
             entryDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(listener !=null) {
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
+                    int position = getAdapterPosition();
+                    listener.onItemDeleteClicked(position);
                 }
             });
+
+            entryEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    listener.onItemEditClicked(position);
+                }
+            });
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    listener.onItemDisplayClicked(position);
+                }
+            });
+
         }
+
     }
 }

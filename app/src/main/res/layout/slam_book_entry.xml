@@ -18,7 +18,25 @@
         android:orientation="vertical"
         android:layout_margin="5dp"
         >
-
+        <!--    HIDDEN    -->
+        <TextView
+            android:id="@+id/entryBirthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/entryGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/entryHobbies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
         <TextView
             android:id="@+id/entryFullName"
             android:layout_width="wrap_content"

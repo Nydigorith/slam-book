@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,13 +59,10 @@ public class Login extends AppCompatActivity {
                         String registrationPassword = getRegistrationIntent.getStringExtra("registrationPassword");
                         Bitmap registrationPicture = getRegistrationIntent.getParcelableExtra("registrationPicture");
 
-                        registrationUsername = "1";
-                        registrationPassword = "1";
-
                         if (username.equals(registrationUsername) && password.equals(registrationPassword)) {
                             Intent putLoginIntent = new Intent(c, EntryList.class);
-                            putLoginIntent.putExtra("loginFullName", "registrationFullName");
-                            putLoginIntent.putExtra("loginPicture", "registrationPicture");
+                            putLoginIntent.putExtra("loginFullName", registrationFullName);
+                            putLoginIntent.putExtra("loginPicture", registrationPicture);
                             startActivity(putLoginIntent);
 
                             Toast.makeText(c, "success", Toast.LENGTH_SHORT).show();
@@ -95,8 +93,6 @@ public class Login extends AppCompatActivity {
                         dialog.show();
                     }
                 }
-
-
             }
         });
 
@@ -107,11 +103,13 @@ public class Login extends AppCompatActivity {
                 builder.setTitle("Register").setMessage("You will be redirected to Registration Page").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                         Intent intent = new Intent(c, EntryList.class);
 
-                        intent.putExtra("loginFullName", "registrationFullName");
-                        intent.putExtra("loginPicture", "registrationPicture");
+//                        TEST DATA
+                        Intent intent = new Intent(c, EntryList.class);
+                        intent.putExtra("loginFullName", "Test Name");
+    //                    intent.putExtra("loginPicture", BitmapFactory.decodeResource(c.getResources(), R.drawable.coffee1));
 
+ //                       Intent intent = new Intent(c, Registration.class);
                         startActivity(intent);
                     }
                 });
