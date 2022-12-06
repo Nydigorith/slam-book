@@ -41,7 +41,7 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
 
     ArrayList<Entry> entryList = new ArrayList<>();
     ArrayList<Entry> entryList2 = new ArrayList<>();
-
+Bitmap currentEntryPicture;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +132,8 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
                     String arrayListBirthday = entryList.get(position).getEntryBirthday();
                     String arrayListHobbies = entryList.get(position).getEntryHobbies();
                     Bitmap arrayListPicture = entryList.get(position).getEntryPicture();
+
+                    currentEntryPicture = arrayListPicture;
                     putEntryListIntent.putExtra("entryListFullName", arrayListFullName);
                     putEntryListIntent.putExtra("entryListPosition", String.valueOf(position));
                     putEntryListIntent.putExtra("entryListRemark", arrayListRemark);
@@ -139,6 +141,7 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
 
                     putEntryListIntent.putExtra("entryListBirthday", arrayListBirthday);
                     putEntryListIntent.putExtra("entryListHobbies", arrayListHobbies);
+
                     String pictureFilePath= tempFileImage(c,arrayListPicture,"name");
                     putEntryListIntent.putExtra("entryListPicture", pictureFilePath);
                     startActivityForResult(putEntryListIntent,EDIT_ENTRY_REQUEST_CODE);
@@ -183,7 +186,7 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
 
                     putArrayListIntent.putExtra("entryListRemark", arrayListRemark);
                     putArrayListIntent.putExtra("entryListGender", arrayListGender);
-                    Toast.makeText(c, arrayListPicture+"", Toast.LENGTH_SHORT).show();
+
                     putArrayListIntent.putExtra("entryListBirthday", arrayListBirthday);
                     putArrayListIntent.putExtra("entryListHobbies", arrayListHobbies);
 
@@ -220,7 +223,7 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(c, "generak inbtent", Toast.LENGTH_SHORT).show();
+
         if (requestCode == ADD_ENTRY_REQUEST_CODE && resultCode == RESULT_OK) {
             if(data.hasExtra("addEntryName")) {
                     String addEntryName = data.getStringExtra("addEntryName");
@@ -240,7 +243,7 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
                                 R.drawable.no_picture), addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
 
                     }
-                Toast.makeText(c, addEntryName+addEntryRemark+addBirthday+addEntryHobbies+addEntryGender+""+addEntryBtmpPicture, Toast.LENGTH_SHORT).show();
+
 
                     Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
                 recyclerViewAdapter.notifyItemInserted(entryList.size()-1);
@@ -267,31 +270,19 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
                 String editBirthday = data.getStringExtra("editEntryBirthday");
                 String editEntryHobbies = data.getStringExtra("editEntryHobbies");
                 String editEntryGender = data.getStringExtra("editEntryGender");
+              Bitmap editEntryPicture = data.getParcelableExtra("editEntryPicture");
 
-    //            byte[] editEntryByteArray = data.getByteArrayExtra("editEntryByteArray");
-     //           Toast.makeText(c, editEntryByteArray+"", Toast.LENGTH_SHORT).show();
-//                Bitmap editEntryBtmpPicture = BitmapFactory.decodeByteArray(editEntryByteArray, 0, editEntryByteArray.length);
+                if (editEntryPicture != null) {
+                    entryList.set(Integer.parseInt(entryListPosition), new Entry(editEntryPicture, editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
 
+                } else {
+                    entryList.set(Integer.parseInt(entryListPosition), new Entry(currentEntryPicture, editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
 
+                }
 
-      //Bitmap editEntryBtmpPicture = data.getParcelableExtra("editEntryBtmpPicture");
-//                String filePath=getIntent().getStringExtra("editEntryBtmpPicture");
-//                File file = new File(filePath);
-//                Bitmap editEntryBtmpPicture = BitmapFactory.decodeFile(editFile.getAbsolutePath());
-
-//
-                Toast.makeText(c, entryListPosition+"edit works", Toast.LENGTH_SHORT).show();
-                entryList.set(Integer.parseInt(entryListPosition), new Entry(BitmapFactory.decodeResource(c.getResources(),
-                        R.drawable.coffee1), editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
-
-                Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(c, "Item Edited", Toast.LENGTH_SHORT).show();
                 recyclerViewAdapter.notifyDataSetChanged();
-            } else {
-                Toast.makeText(c, "edit not works", Toast.LENGTH_SHORT).show();
             }
-
-
-
         }
     }
 }

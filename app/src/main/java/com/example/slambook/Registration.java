@@ -159,10 +159,10 @@ public class Registration extends AppCompatActivity {
                 String contact = etxtContact.getText().toString();
                 String gender = etxtOther.getText().toString();
 
-//                if (!(cbReading.isChecked() || cbBirdWatching.isChecked() || cbCollecting.isChecked() || cbCrafting.isChecked() || cbFishing.isChecked() || cbTraveling.isChecked() || cbGardening.isChecked() || cbMusic.isChecked() || cbTelevision.isChecked() || cbVideoGames.isChecked()) || username.equals("") || password.equals("") || confirmPassword.equals("") || firstName.equals("") ||
-//                        lastName.equals("") || middleName.equals("") || email.equals("") || birthdate.equals("") || barangay.equals("") || street.equals("") || number.equals("") || municipality.equals("") || province.equals("") || answer1.equals("") || answer2.equals("") || answer3.equals("") ||
-//                        contact.equals("") || gender.equals("") || birthdate.equals("Date of Birth") || ivPicture.getDrawable() == null) {
-                if (false) {
+                if (!(cbReading.isChecked() || cbBirdWatching.isChecked() || cbCollecting.isChecked() || cbCrafting.isChecked() || cbFishing.isChecked() || cbTraveling.isChecked() || cbGardening.isChecked() || cbMusic.isChecked() || cbTelevision.isChecked() || cbVideoGames.isChecked()) || username.equals("") || password.equals("") || confirmPassword.equals("") || firstName.equals("") ||
+                        lastName.equals("") || middleName.equals("") || email.equals("") || birthdate.equals("") || barangay.equals("") || street.equals("") || number.equals("") || municipality.equals("") || province.equals("") || answer1.equals("") || answer2.equals("") || answer3.equals("") ||
+                        contact.equals("") || gender.equals("") || birthdate.equals("Date of Birth") || ivPicture.getDrawable() == null) {
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
                     builder.setTitle("Attention").setMessage("All fields are required").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                         @Override

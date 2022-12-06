@@ -59,10 +59,6 @@ public class Login extends AppCompatActivity {
                         String registrationPassword = getRegistrationIntent.getStringExtra("registrationPassword");
                         Bitmap registrationPicture = getRegistrationIntent.getParcelableExtra("registrationPicture");
 
-                        //TEST DATA
-//                        registrationUsername = "1";
-//                        registrationPassword = "1";
-
                         if (username.equals(registrationUsername) && password.equals(registrationPassword)) {
                             Intent putLoginIntent = new Intent(c, EntryList.class);
                             putLoginIntent.putExtra("loginFullName", registrationFullName);
@@ -97,8 +93,6 @@ public class Login extends AppCompatActivity {
                         dialog.show();
                     }
                 }
-
-
             }
         });
 

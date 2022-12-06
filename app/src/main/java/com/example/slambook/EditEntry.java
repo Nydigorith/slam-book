@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -61,10 +62,6 @@ String entryPosition ;
 
     }
 
-    private void intent() {
-
-    }
-
     private void initialize() {
         tvBirthdate = findViewById(R.id.tvBirthdate);
         etxtName = findViewById(R.id.etxtName);
@@ -98,8 +95,6 @@ String entryPosition ;
         rbOthers.setOnClickListener(getRadio);
 
 //display data
-
-
         Intent getArrayListIntent = getIntent();
         if (getArrayListIntent.hasExtra("entryListFullName")) {
 
@@ -117,8 +112,7 @@ String entryPosition ;
             Bitmap individualEntryBtmpPicture = BitmapFactory.decodeFile(file.getAbsolutePath());
 
 ivPicture.setImageBitmap(individualEntryBtmpPicture);
-            editEntryBtmpPicture = individualEntryBtmpPicture;
-
+           // editEntryBtmpPicture = individualEntryBtmpPicture;
 
 
             etxtName.setText(individualEntryFullName);
@@ -241,15 +235,6 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
                         hobbies += cbVideoGames.getText().toString() + "\n";
                     }
 
-                //    Intent getEntryListIntent = getIntent();
-                //    if (getEntryListIntent.hasExtra("editEntryName")) {
-                        Toast.makeText(c, editEntryName+"inside", Toast.LENGTH_SHORT).show();
-                     //   String loginFullName = getEntryListIntent.getStringExtra("loginFullName");
-                     //   Bitmap loginPicture = getEntryListIntent.getParcelableExtra("loginPicture");
-
-                       // Toast.makeText(c, entryListPosition+"", Toast.LENGTH_SHORT).show();
-
-
 
                     Intent putEditEntryIntent = new Intent();
 
@@ -257,25 +242,15 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
                     putEditEntryIntent.putExtra("editEntryHobbies", hobbies);
                     putEditEntryIntent.putExtra("editEntryGender", editEntryGender);
                     putEditEntryIntent.putExtra("editEntryPosition", entryPosition);
-//
+
                    putEditEntryIntent.putExtra("editEntryName", editEntryName);
 
                     putEditEntryIntent.putExtra("editEntryRemark", editEntryRemark);
-//                    String editPictureFilePath= tempFileImage(c,editEntryBtmpPicture,"editEntryPicture");
-//                    putEditEntryIntent.putExtra("editEntryBtmpPicture", editPictureFilePath);
-
-
-//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-//                    editEntryBtmpPicture.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//                    byte[] editEntryByteArray = stream.toByteArray();
-//                    putEditEntryIntent.putExtra("editEntryBtmpPicture", editEntryByteArray);
-
+                   putEditEntryIntent.putExtra("editEntryPicture", editEntryBtmpPicture);
 
                     setResult(RESULT_OK,putEditEntryIntent);
                     finish();
 
-
-                  //  }
                 }
             }
         });
@@ -283,38 +258,6 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //intent();
-//                Intent getArrayListIntent = getIntent();
-//                if (getArrayListIntent.hasExtra("entryListRemark")) {
-//
-//                    String individualEntryFullName = getArrayListIntent.getStringExtra("entryListFullName");
-//                    String individualEntryRemark = getArrayListIntent.getStringExtra("entryListRemark");
-//                    String individualEntryGender = getArrayListIntent.getStringExtra("entryListGender");
-//                    String individualEntryHobbies = getArrayListIntent.getStringExtra("entryListHobbies");
-//                    String individualEntryBirthday = getArrayListIntent.getStringExtra("entryListBirthday");
-//
-//
-//                    Intent putEditEntryIntent = new Intent(c, EntryList.class);
-//
-//                        String loginFullName = getArrayListIntent.getStringExtra("loginFullName");
-//                        Bitmap loginPicture = getArrayListIntent.getParcelableExtra("loginPicture");
-//                        String entryListPosition = getArrayListIntent.getStringExtra("entryListPosition");
-//
-//                    putEditEntryIntent.putExtra("loginFullName", loginFullName);
-//                    putEditEntryIntent.putExtra("loginPicture", loginPicture);
-//
-//                    putEditEntryIntent.putExtra("editEntryPosition", entryListPosition);
-//                    putEditEntryIntent.putExtra("editEntryBirthday", individualEntryBirthday);
-//                    putEditEntryIntent.putExtra("editEntryHobbies", individualEntryHobbies);
-//                    putEditEntryIntent.putExtra("editEntryGender", individualEntryGender);
-//                    putEditEntryIntent.putExtra("editEntryName", individualEntryFullName);
-//                    putEditEntryIntent.putExtra("editEntryRemark", individualEntryRemark);
-//                    putEditEntryIntent.putExtra("editEntryCancel", "1");
-//                    putEditEntryIntent.putExtra("editEntryBtmpPicture", editEntryBtmpPicture);
-//                    Toast.makeText(c, individualEntryFullName+"", Toast.LENGTH_SHORT).show();
-//                        startActivity(putEditEntryIntent);
-//
-//                }
                 Intent putEditEntryIntent = new Intent();
                 setResult(RESULT_OK,putEditEntryIntent);
                 finish();
@@ -342,23 +285,6 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
         }
     }
 
-    public static String tempFileImage(Context context, Bitmap bitmap, String name) {
-
-        File outputDir = context.getCacheDir();
-        File imageFile = new File(outputDir, name + ".jpg");
-
-        OutputStream os;
-        try {
-            os = new FileOutputStream(imageFile);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            Log.e(context.getClass().getSimpleName(), "Error writing file", e);
-        }
-
-        return imageFile.getAbsolutePath();
-    }
 
     View.OnClickListener getRadio = new View.OnClickListener() {
         @Override

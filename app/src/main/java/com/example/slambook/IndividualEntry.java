@@ -30,21 +30,6 @@ public class IndividualEntry extends AppCompatActivity {
         Toast.makeText(c, "Hrtr", Toast.LENGTH_SHORT).show();
     }
 
-    private void intent() {
-//        Intent getEntryListIntent = getIntent();
-//        if (getEntryListIntent.hasExtra("loginFullName")) {
-//            String loginFullName = getEntryListIntent.getStringExtra("loginFullName");
-//            Bitmap loginPicture = getEntryListIntent.getParcelableExtra("loginPicture");
-//
-//            Intent addEntryIntent = new Intent(c, EntryList.class);
-//            addEntryIntent.putExtra("loginFullName", loginFullName);
-//            addEntryIntent.putExtra("loginPicture", loginPicture);
-//            startActivity(addEntryIntent);
-//        } else {
-//            Toast.makeText(c, "ds", Toast.LENGTH_SHORT).show();
-//        }
-    }
-
     private void initialize() {
         txtName = findViewById(R.id.txtName);
         txtRemark = findViewById(R.id.txtRemark);
@@ -70,7 +55,7 @@ public class IndividualEntry extends AppCompatActivity {
 
             txtName.setText(individualEntryFullName);
             txtRemark.setText(individualEntryRemark);
-ivPicture.setImageBitmap(individualEntryBtmpPicture);
+            ivPicture.setImageBitmap(individualEntryBtmpPicture);
             txtBirthday.setText(individualEntryBirthday);
             txtHobbies.setText(individualEntryHobbies);
             txtGender.setText(individualEntryGender);
