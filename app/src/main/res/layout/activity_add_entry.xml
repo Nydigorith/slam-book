@@ -124,87 +124,11 @@
                 android:textSize="20dp"
                 android:paddingTop="25dp"
                 android:textStyle="bold"/>
-            <LinearLayout
+            <EditText
+                android:id="@+id/etxtHobbies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <CheckBox
-                    android:id="@+id/cbReading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Reading"
-                    />
-                <CheckBox
-                    android:id="@+id/cbTraveling"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Traveling"
-                    />
-                <CheckBox
-                    android:id="@+id/cbFishing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Fishing"
-                    />
-                <CheckBox
-                    android:id="@+id/cbCrafting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Crafting"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <CheckBox
-                    android:id="@+id/cbGardening"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gardening"
-                    />
-                <CheckBox
-                    android:id="@+id/cbMusic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Music"
-                    />
-                <CheckBox
-                    android:id="@+id/cbCollecting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Collecting"
-                    />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <CheckBox
-                    android:id="@+id/cbBirdWatching"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bird Watching"
-                    />
-                <CheckBox
-                    android:id="@+id/cbTelevision"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Television"
-                    />
-                <CheckBox
-                    android:id="@+id/cbVideoGames"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Video Games"
-                    />
-
-            </LinearLayout>
-
+                android:hint="Enter Remark"/>
         </LinearLayout>
 
     </ScrollView>

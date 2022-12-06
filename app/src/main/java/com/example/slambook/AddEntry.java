@@ -29,10 +29,10 @@ public class AddEntry extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView ivPicture;
     TextView tvBirthdate;
-    EditText etxtName, etxtRemark, etxtOther;
+    EditText etxtName, etxtRemark, etxtOther,etxtHobbies;
     RadioGroup rgGender;
     RadioButton rbMale, rbFemale, rbOthers;
-    CheckBox cbReading, cbTraveling, cbFishing, cbCrafting, cbTelevision, cbBirdWatching, cbCollecting, cbMusic, cbGardening, cbVideoGames;
+
     String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
     DatePickerDialog datePickerDialog;
@@ -61,23 +61,14 @@ public class AddEntry extends AppCompatActivity {
         etxtRemark = findViewById(R.id.etxtRemark);
         btnCancel = findViewById(R.id.btnCancel);
         btnAddEntry = findViewById(R.id.btnAddEntry);
+        etxtHobbies = findViewById(R.id.etxtHobbies);
 
         etxtOther = findViewById(R.id.etxtOther);
         rgGender = findViewById(R.id.rgGender);
         rbMale = findViewById(R.id.rbMale);
         rbFemale = findViewById(R.id.rbFemale);
         rbOthers = findViewById(R.id.rbOthers);
-        cbReading = findViewById(R.id.cbReading);
-        cbTraveling = findViewById(R.id.cbTraveling);
-        cbFishing = findViewById(R.id.cbFishing);
-        cbCrafting = findViewById(R.id.cbCrafting);
-        cbTelevision = findViewById(R.id.cbTelevision);
-        cbBirdWatching = findViewById(R.id.cbBirdWatching);
-        cbCollecting = findViewById(R.id.cbCollecting);
-        cbMusic = findViewById(R.id.cbMusic);
-        cbGardening = findViewById(R.id.cbGardening);
-        cbVideoGames = findViewById(R.id.cbVideoGames);
-        cbGardening = findViewById(R.id.cbGardening);
+
 
         ivPicture = findViewById(R.id.ivPicture);
         btnTakePicture = findViewById(R.id.btnTakePicture);
@@ -113,7 +104,8 @@ public class AddEntry extends AppCompatActivity {
                 String addEntryRemark = etxtRemark.getText().toString();
                 String addEntryBirthdate = tvBirthdate.getText().toString();
                 String addEntryGender = etxtOther.getText().toString();
-                if (!(cbReading.isChecked() || cbBirdWatching.isChecked() || cbCollecting.isChecked() || cbCrafting.isChecked() || cbFishing.isChecked() || cbTraveling.isChecked() || cbGardening.isChecked() || cbMusic.isChecked() || cbTelevision.isChecked() || cbVideoGames.isChecked()) || addEntryName.equals("") || addEntryRemark.equals("") ||
+                String addEntryHobbies = etxtHobbies.getText().toString();
+                if ( addEntryName.equals("") || addEntryHobbies.equals("") || addEntryRemark.equals("") ||
                         addEntryBirthdate.equals("") || addEntryGender.equals("") || addEntryBirthdate.equals("Date of Birth")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
                     builder.setTitle("Attention").setMessage("Answer all the required fields").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
@@ -124,46 +116,13 @@ public class AddEntry extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    String hobbies = "";
-
-                    if (cbReading.isChecked()) {
-                        hobbies += cbReading.getText().toString() + "\n";
-
-                    }
-                    if (cbBirdWatching.isChecked()) {
-                        hobbies += cbBirdWatching.getText().toString() + "\n";
-                    }
-                    if (cbCollecting.isChecked()) {
-                        hobbies += cbCollecting.getText().toString() + "\n";
-                    }
-                    if (cbCrafting.isChecked()) {
-                        hobbies += cbCrafting.getText().toString() + "\n";
-                    }
-                    if (cbFishing.isChecked()) {
-                        hobbies += cbFishing.getText().toString() + "\n";
-                    }
-                    if (cbTraveling.isChecked()) {
-                        hobbies += cbTraveling.getText().toString() + "\n";
-                    }
-                    if (cbGardening.isChecked()) {
-                        hobbies += cbGardening.getText().toString() + "\n";
-                    }
-                    if (cbMusic.isChecked()) {
-                        hobbies += cbMusic.getText().toString() + "\n";
-                    }
-                    if (cbTelevision.isChecked()) {
-                        hobbies += cbTelevision.getText().toString() + "\n";
-                    }
-                    if (cbVideoGames.isChecked()) {
-                        hobbies += cbVideoGames.getText().toString() + "\n";
-                    }
 
 
                         Intent putAddEntryIntent = new Intent();
 
 
                         putAddEntryIntent.putExtra("addEntryBirthday", addEntryBirthdate);
-                        putAddEntryIntent.putExtra("addEntryHobbies", hobbies);
+                        putAddEntryIntent.putExtra("addEntryHobbies", addEntryHobbies);
                         putAddEntryIntent.putExtra("addEntryGender", addEntryGender);
                         putAddEntryIntent.putExtra("addEntryName", addEntryName);
                         putAddEntryIntent.putExtra("addEntryRemark", addEntryRemark);
