@@ -106,7 +106,7 @@ String entryPosition ;
             String entryListPosition = getArrayListIntent.getStringExtra("entryListPosition");
             entryPosition=entryListPosition;
 
-            Toast.makeText(c, entryListPosition+" POS", Toast.LENGTH_SHORT).show();
+
             String pictureFilePath=getIntent().getStringExtra("entryListPicture");
             File file = new File(pictureFilePath);
             Bitmap individualEntryBtmpPicture = BitmapFactory.decodeFile(file.getAbsolutePath());
@@ -193,7 +193,7 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
                 if (!(cbReading.isChecked() || cbBirdWatching.isChecked() || cbCollecting.isChecked() || cbCrafting.isChecked() || cbFishing.isChecked() || cbTraveling.isChecked() || cbGardening.isChecked() || cbMusic.isChecked() || cbTelevision.isChecked() || cbVideoGames.isChecked()) || editEntryName.equals("") || editEntryRemark.equals("") ||
                         editEntryBirthdate.equals("") || editEntryGender.equals("") || editEntryBirthdate.equals("Date of Birth")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                    builder.setTitle("Attention").setMessage("Answer reqquired fields ").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    builder.setTitle("Attention").setMessage("Answer all the required fields").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }

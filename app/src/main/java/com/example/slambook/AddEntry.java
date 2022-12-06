@@ -116,7 +116,7 @@ public class AddEntry extends AppCompatActivity {
                 if (!(cbReading.isChecked() || cbBirdWatching.isChecked() || cbCollecting.isChecked() || cbCrafting.isChecked() || cbFishing.isChecked() || cbTraveling.isChecked() || cbGardening.isChecked() || cbMusic.isChecked() || cbTelevision.isChecked() || cbVideoGames.isChecked()) || addEntryName.equals("") || addEntryRemark.equals("") ||
                         addEntryBirthdate.equals("") || addEntryGender.equals("") || addEntryBirthdate.equals("Date of Birth")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                    builder.setTitle("Attention").setMessage("Answer reqquired fields ").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    builder.setTitle("Attention").setMessage("Answer all the required fields").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }

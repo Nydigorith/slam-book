@@ -71,7 +71,7 @@ Bitmap currentEntryPicture;
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                    builder.setTitle("Ylogout").setMessage("Ylogout").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    builder.setTitle("Logout").setMessage("Are you sure you want to log out?").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(c, Login.class);
@@ -151,7 +151,7 @@ Bitmap currentEntryPicture;
                 public void onItemDeleteClicked(int position) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                    builder.setTitle("delete").setMessage("Delete").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    builder.setTitle("Delete").setMessage("Are you sure you want to delete this entry?").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             entryList.remove(position);
@@ -245,7 +245,7 @@ Bitmap currentEntryPicture;
                     }
 
 
-                    Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
                 recyclerViewAdapter.notifyItemInserted(entryList.size()-1);
                 layoutManager.scrollToPosition(0);
 
@@ -280,7 +280,7 @@ Bitmap currentEntryPicture;
 
                 }
 
-                Toast.makeText(c, "Item Edited", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(c, "Item Edited", Toast.LENGTH_SHORT).show();
                 recyclerViewAdapter.notifyDataSetChanged();
             }
         }

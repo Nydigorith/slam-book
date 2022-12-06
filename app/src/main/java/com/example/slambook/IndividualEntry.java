@@ -27,7 +27,6 @@ public class IndividualEntry extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_entry);
         initialize();
-        Toast.makeText(c, "Hrtr", Toast.LENGTH_SHORT).show();
     }
 
     private void initialize() {
@@ -59,8 +58,6 @@ public class IndividualEntry extends AppCompatActivity {
             txtBirthday.setText(individualEntryBirthday);
             txtHobbies.setText(individualEntryHobbies);
             txtGender.setText(individualEntryGender);
-        } else {
-            Toast.makeText(c, "no intent", Toast.LENGTH_SHORT).show();
         }
 
         btnBack.setOnClickListener(new View.OnClickListener() {

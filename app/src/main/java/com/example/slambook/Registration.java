@@ -243,10 +243,10 @@ public class Registration extends AppCompatActivity {
 
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                            builder.setTitle("Register").setMessage(information).setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                            builder.setTitle("All Information").setMessage(information).setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(c, "Registration was Successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(c, "Registration successful", Toast.LENGTH_SHORT).show();
                                     Intent putRegistrationIntent = new Intent(c, Login.class);
                                     putRegistrationIntent.putExtra("registrationFullName", firstName + " " + middleName + " " + lastName);
                                     putRegistrationIntent.putExtra("registrationUsername", username);
@@ -261,7 +261,7 @@ public class Registration extends AppCompatActivity {
 
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                        builder.setTitle("Attention").setMessage("Password did not match").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                        builder.setTitle("Attention").setMessage("Password do not match").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
