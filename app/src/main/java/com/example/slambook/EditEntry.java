@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,6 +25,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 public class EditEntry extends AppCompatActivity {
 
@@ -39,7 +45,7 @@ public class EditEntry extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     Button btnCancel, btnEditEntry, btnTakePicture;
     Bitmap editEntryBtmpPicture;
-
+String entryPosition ;
     Calendar currentDate = Calendar.getInstance();
     int year = currentDate.get(Calendar.YEAR);
     int month = currentDate.get(Calendar.MONTH);
@@ -91,21 +97,32 @@ public class EditEntry extends AppCompatActivity {
         rbFemale.setOnClickListener(getRadio);
         rbOthers.setOnClickListener(getRadio);
 
+//display data
+
 
         Intent getArrayListIntent = getIntent();
-        if (getArrayListIntent.hasExtra("entryListRemark")) {
-            Bitmap individualEntryBtmpPicture = getArrayListIntent.getParcelableExtra("editEntryBtmpPicture");
+        if (getArrayListIntent.hasExtra("entryListFullName")) {
+
             String individualEntryFullName = getArrayListIntent.getStringExtra("entryListFullName");
             String individualEntryRemark = getArrayListIntent.getStringExtra("entryListRemark");
             String individualEntryGender = getArrayListIntent.getStringExtra("entryListGender");
             String individualEntryHobbies = getArrayListIntent.getStringExtra("entryListHobbies");
             String individualEntryBirthday = getArrayListIntent.getStringExtra("entryListBirthday");
+            String entryListPosition = getArrayListIntent.getStringExtra("entryListPosition");
+            entryPosition=entryListPosition;
+
+            Toast.makeText(c, entryListPosition+" POS", Toast.LENGTH_SHORT).show();
+            String pictureFilePath=getIntent().getStringExtra("entryListPicture");
+            File file = new File(pictureFilePath);
+            Bitmap individualEntryBtmpPicture = BitmapFactory.decodeFile(file.getAbsolutePath());
+
+ivPicture.setImageBitmap(individualEntryBtmpPicture);
+            editEntryBtmpPicture = individualEntryBtmpPicture;
+
+
 
             etxtName.setText(individualEntryFullName);
             etxtRemark.setText(individualEntryRemark);
-            Toast.makeText(c, individualEntryBtmpPicture+"", Toast.LENGTH_SHORT).show();
-ivPicture.setImageBitmap(individualEntryBtmpPicture);
-            editEntryBtmpPicture = individualEntryBtmpPicture;
             tvBirthdate.setText(individualEntryBirthday);
 
             if (individualEntryGender.equals("Male")) {
@@ -130,7 +147,7 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
 
 
             String[] splitHobbies = individualEntryHobbies.split("\n");
-            Toast.makeText(c, splitHobbies[0] +" one " + splitHobbies[1], Toast.LENGTH_SHORT).show();
+
             getHobbies(splitHobbies,cbReading,"Reading");
             getHobbies(splitHobbies,   cbBirdWatching,"Bird Watching");
             getHobbies(splitHobbies,  cbCollecting, "Collecting");
@@ -224,25 +241,41 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
                         hobbies += cbVideoGames.getText().toString() + "\n";
                     }
 
-                    Intent getEntryListIntent = getIntent();
-                    if (getEntryListIntent.hasExtra("loginFullName")) {
-                        String loginFullName = getEntryListIntent.getStringExtra("loginFullName");
-                        Bitmap loginPicture = getEntryListIntent.getParcelableExtra("loginPicture");
-                        String entryListPosition = getEntryListIntent.getStringExtra("entryListPosition");
-                        Toast.makeText(c, entryListPosition+"", Toast.LENGTH_SHORT).show();
-                        Intent putEditEntryIntent = new Intent(c, EntryList.class);
-                        putEditEntryIntent.putExtra("loginFullName", loginFullName);
-                        putEditEntryIntent.putExtra("loginPicture", loginPicture);
-                        putEditEntryIntent.putExtra("editEntryPosition", entryListPosition);
-                        putEditEntryIntent.putExtra("editEntryBirthday", editEntryBirthdate);
-                        putEditEntryIntent.putExtra("editEntryHobbies", hobbies);
-                        putEditEntryIntent.putExtra("editEntryGender", editEntryGender);
-                        putEditEntryIntent.putExtra("editEntryName", editEntryName);
-                        putEditEntryIntent.putExtra("editEntryRemark", editEntryRemark);
-                        putEditEntryIntent.putExtra("editEntryBtmpPicture", editEntryBtmpPicture);
-                        Toast.makeText(c, editEntryName+"", Toast.LENGTH_SHORT).show();
-                        startActivity(putEditEntryIntent);
-                    }
+                //    Intent getEntryListIntent = getIntent();
+                //    if (getEntryListIntent.hasExtra("editEntryName")) {
+                        Toast.makeText(c, editEntryName+"inside", Toast.LENGTH_SHORT).show();
+                     //   String loginFullName = getEntryListIntent.getStringExtra("loginFullName");
+                     //   Bitmap loginPicture = getEntryListIntent.getParcelableExtra("loginPicture");
+
+                       // Toast.makeText(c, entryListPosition+"", Toast.LENGTH_SHORT).show();
+
+
+
+                    Intent putEditEntryIntent = new Intent();
+
+                 putEditEntryIntent.putExtra("editEntryBirthday", editEntryBirthdate);
+                    putEditEntryIntent.putExtra("editEntryHobbies", hobbies);
+                    putEditEntryIntent.putExtra("editEntryGender", editEntryGender);
+                    putEditEntryIntent.putExtra("editEntryPosition", entryPosition);
+//
+                   putEditEntryIntent.putExtra("editEntryName", editEntryName);
+
+                    putEditEntryIntent.putExtra("editEntryRemark", editEntryRemark);
+//                    String editPictureFilePath= tempFileImage(c,editEntryBtmpPicture,"editEntryPicture");
+//                    putEditEntryIntent.putExtra("editEntryBtmpPicture", editPictureFilePath);
+
+
+//                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+//                    editEntryBtmpPicture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+//                    byte[] editEntryByteArray = stream.toByteArray();
+//                    putEditEntryIntent.putExtra("editEntryBtmpPicture", editEntryByteArray);
+
+
+                    setResult(RESULT_OK,putEditEntryIntent);
+                    finish();
+
+
+                  //  }
                 }
             }
         });
@@ -251,37 +284,40 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
             @Override
             public void onClick(View v) {
                 //intent();
-                Intent getArrayListIntent = getIntent();
-                if (getArrayListIntent.hasExtra("entryListRemark")) {
-
-                    String individualEntryFullName = getArrayListIntent.getStringExtra("entryListFullName");
-                    String individualEntryRemark = getArrayListIntent.getStringExtra("entryListRemark");
-                    String individualEntryGender = getArrayListIntent.getStringExtra("entryListGender");
-                    String individualEntryHobbies = getArrayListIntent.getStringExtra("entryListHobbies");
-                    String individualEntryBirthday = getArrayListIntent.getStringExtra("entryListBirthday");
-
-
-                    Intent putEditEntryIntent = new Intent(c, EntryList.class);
-
-                        String loginFullName = getArrayListIntent.getStringExtra("loginFullName");
-                        Bitmap loginPicture = getArrayListIntent.getParcelableExtra("loginPicture");
-                        String entryListPosition = getArrayListIntent.getStringExtra("entryListPosition");
-
-                    putEditEntryIntent.putExtra("loginFullName", loginFullName);
-                    putEditEntryIntent.putExtra("loginPicture", loginPicture);
-
-                    putEditEntryIntent.putExtra("editEntryPosition", entryListPosition);
-                    putEditEntryIntent.putExtra("editEntryBirthday", individualEntryBirthday);
-                    putEditEntryIntent.putExtra("editEntryHobbies", individualEntryHobbies);
-                    putEditEntryIntent.putExtra("editEntryGender", individualEntryGender);
-                    putEditEntryIntent.putExtra("editEntryName", individualEntryFullName);
-                    putEditEntryIntent.putExtra("editEntryRemark", individualEntryRemark);
-                    putEditEntryIntent.putExtra("editEntryCancel", "1");
-                    putEditEntryIntent.putExtra("editEntryBtmpPicture", editEntryBtmpPicture);
-                    Toast.makeText(c, individualEntryFullName+"", Toast.LENGTH_SHORT).show();
-                        startActivity(putEditEntryIntent);
-
-                }
+//                Intent getArrayListIntent = getIntent();
+//                if (getArrayListIntent.hasExtra("entryListRemark")) {
+//
+//                    String individualEntryFullName = getArrayListIntent.getStringExtra("entryListFullName");
+//                    String individualEntryRemark = getArrayListIntent.getStringExtra("entryListRemark");
+//                    String individualEntryGender = getArrayListIntent.getStringExtra("entryListGender");
+//                    String individualEntryHobbies = getArrayListIntent.getStringExtra("entryListHobbies");
+//                    String individualEntryBirthday = getArrayListIntent.getStringExtra("entryListBirthday");
+//
+//
+//                    Intent putEditEntryIntent = new Intent(c, EntryList.class);
+//
+//                        String loginFullName = getArrayListIntent.getStringExtra("loginFullName");
+//                        Bitmap loginPicture = getArrayListIntent.getParcelableExtra("loginPicture");
+//                        String entryListPosition = getArrayListIntent.getStringExtra("entryListPosition");
+//
+//                    putEditEntryIntent.putExtra("loginFullName", loginFullName);
+//                    putEditEntryIntent.putExtra("loginPicture", loginPicture);
+//
+//                    putEditEntryIntent.putExtra("editEntryPosition", entryListPosition);
+//                    putEditEntryIntent.putExtra("editEntryBirthday", individualEntryBirthday);
+//                    putEditEntryIntent.putExtra("editEntryHobbies", individualEntryHobbies);
+//                    putEditEntryIntent.putExtra("editEntryGender", individualEntryGender);
+//                    putEditEntryIntent.putExtra("editEntryName", individualEntryFullName);
+//                    putEditEntryIntent.putExtra("editEntryRemark", individualEntryRemark);
+//                    putEditEntryIntent.putExtra("editEntryCancel", "1");
+//                    putEditEntryIntent.putExtra("editEntryBtmpPicture", editEntryBtmpPicture);
+//                    Toast.makeText(c, individualEntryFullName+"", Toast.LENGTH_SHORT).show();
+//                        startActivity(putEditEntryIntent);
+//
+//                }
+                Intent putEditEntryIntent = new Intent();
+                setResult(RESULT_OK,putEditEntryIntent);
+                finish();
             }
         });
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
@@ -304,6 +340,24 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
             ivPicture.setImageBitmap(imageBitmap);
             editEntryBtmpPicture = imageBitmap;
         }
+    }
+
+    public static String tempFileImage(Context context, Bitmap bitmap, String name) {
+
+        File outputDir = context.getCacheDir();
+        File imageFile = new File(outputDir, name + ".jpg");
+
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            Log.e(context.getClass().getSimpleName(), "Error writing file", e);
+        }
+
+        return imageFile.getAbsolutePath();
     }
 
     View.OnClickListener getRadio = new View.OnClickListener() {

@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class EntryList extends AppCompatActivity {
@@ -27,6 +31,8 @@ public class EntryList extends AppCompatActivity {
     TextView txtFullName;
     Button btnLogout, btnDeleteEntry, btnEditEntry;
 final int ADD_ENTRY_REQUEST_CODE  =1;
+    final int INDIVIDUAl_ENTRY_REQUEST_CODE  =1;
+    final int EDIT_ENTRY_REQUEST_CODE  =1;
     Button btnAddEntry;
     RecyclerView rvEntryList;
 
@@ -91,40 +97,6 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
             entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
                     R.drawable.coffee2), "3", "dsdsa2", "Fishing\nCollecting", "Others", "dsdsa"));
 
-            //edit
-            Intent getEditEntryIntent = getIntent();
-            if (getEditEntryIntent.hasExtra("editEntryName") ) {
-                String editEntryName = getEditEntryIntent.getStringExtra("editEntryName");
-                String editEntryRemark = getEditEntryIntent.getStringExtra("editEntryRemark");
-                String entryListPosition = getEditEntryIntent.getStringExtra("editEntryPosition");
-                String editBirthday = getEditEntryIntent.getStringExtra("editEntryBirthday");
-                String editEntryHobbies = getEditEntryIntent.getStringExtra("editEntryHobbies");
-                String editEntryGender = getEditEntryIntent.getStringExtra("editEntryGender");
-                Toast.makeText(c, entryListPosition+"", Toast.LENGTH_SHORT).show();
-
-                Bitmap editEntryBtmpPicture = getEditEntryIntent.getParcelableExtra("editEntryBtmpPicture");
-
-                if (editEntryBtmpPicture != null) {
-//                    if (getEditEntryIntent.hasExtra("editEntryCancel") ) {
-//                        entryList.set(Integer.parseInt(entryListPosition), new Entry(editEntryBtmpPicture, editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
-//                    } else {
-                        entryList.add(Integer.parseInt(entryListPosition), new Entry(editEntryBtmpPicture, editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
-
-//                    }
-                } else {
-//                    if (getEditEntryIntent.hasExtra("editEntryCancel") ) {
-//                        entryList.set(Integer.parseInt(entryListPosition), new Entry(BitmapFactory.decodeResource(c.getResources(),
-//                                R.drawable.no_picture), editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
-//                    } else {
-                        entryList.add(Integer.parseInt(entryListPosition), new Entry(BitmapFactory.decodeResource(c.getResources(),
-                                R.drawable.no_picture), editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
-//                    }
-                }
-
-                Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(c, "no intent", Toast.LENGTH_SHORT).show();
-            }
 
 
             entryList2 = (ArrayList<Entry>) entryList.clone();
@@ -159,7 +131,7 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
                     String arrayListGender = entryList.get(position).getEntryGender();
                     String arrayListBirthday = entryList.get(position).getEntryBirthday();
                     String arrayListHobbies = entryList.get(position).getEntryHobbies();
-
+                    Bitmap arrayListPicture = entryList.get(position).getEntryPicture();
                     putEntryListIntent.putExtra("entryListFullName", arrayListFullName);
                     putEntryListIntent.putExtra("entryListPosition", String.valueOf(position));
                     putEntryListIntent.putExtra("entryListRemark", arrayListRemark);
@@ -167,8 +139,9 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
 
                     putEntryListIntent.putExtra("entryListBirthday", arrayListBirthday);
                     putEntryListIntent.putExtra("entryListHobbies", arrayListHobbies);
-
-                    startActivity(putEntryListIntent);
+                    String pictureFilePath= tempFileImage(c,arrayListPicture,"name");
+                    putEntryListIntent.putExtra("entryListPicture", pictureFilePath);
+                    startActivityForResult(putEntryListIntent,EDIT_ENTRY_REQUEST_CODE);
                 }
 
                 @Override
@@ -202,9 +175,9 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
                     Bitmap arrayListPicture = entryList.get(position).getEntryPicture();
 
                     Intent putArrayListIntent = new Intent(c, IndividualEntry.class);
-
-                    putArrayListIntent.putExtra("loginFullName", loginFullName);
-                    putArrayListIntent.putExtra("loginPicture", loginPicture);
+                  //  putArrayListIntent.putExtra("entryListFullName", arrayListFullName);
+                 //   putArrayListIntent.putExtra("loginFullName", loginFullName);
+                //    putArrayListIntent.putExtra("loginPicture", loginPicture);
 
                     putArrayListIntent.putExtra("entryListFullName", arrayListFullName);
 
@@ -213,18 +186,41 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
                     Toast.makeText(c, arrayListPicture+"", Toast.LENGTH_SHORT).show();
                     putArrayListIntent.putExtra("entryListBirthday", arrayListBirthday);
                     putArrayListIntent.putExtra("entryListHobbies", arrayListHobbies);
-                    putArrayListIntent.putExtra("entryListPicture", arrayListPicture);
 
-                    startActivity(putArrayListIntent);
+                    //image size too large
+                    String pictureFilePath= tempFileImage(c,arrayListPicture,"name");
+                    putArrayListIntent.putExtra("entryListPicture", pictureFilePath);
+                    startActivityForResult(putArrayListIntent,INDIVIDUAl_ENTRY_REQUEST_CODE);
+                    //startActivity(putArrayListIntent);
 
                 }
             });
 
         }
     }
+
+    public static String tempFileImage(Context context, Bitmap bitmap, String name) {
+
+        File outputDir = context.getCacheDir();
+        File imageFile = new File(outputDir, name + ".jpg");
+
+        OutputStream os;
+        try {
+            os = new FileOutputStream(imageFile);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            Log.e(context.getClass().getSimpleName(), "Error writing file", e);
+        }
+
+        return imageFile.getAbsolutePath();
+    }
+
     @Override
     protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(c, "generak inbtent", Toast.LENGTH_SHORT).show();
         if (requestCode == ADD_ENTRY_REQUEST_CODE && resultCode == RESULT_OK) {
             if(data.hasExtra("addEntryName")) {
                     String addEntryName = data.getStringExtra("addEntryName");
@@ -237,19 +233,64 @@ final int ADD_ENTRY_REQUEST_CODE  =1;
                     Bitmap addEntryBtmpPicture = data.getParcelableExtra("addEntryBtmpPicture");
 
                     if (addEntryBtmpPicture != null) {
-                        entryList.add(0, new Entry(addEntryBtmpPicture, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
+                        entryList.add( new Entry(addEntryBtmpPicture, addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
 
                     } else {
-                        entryList.add( 0,new Entry(BitmapFactory.decodeResource(c.getResources(),
+                        entryList.add( new Entry(BitmapFactory.decodeResource(c.getResources(),
                                 R.drawable.no_picture), addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
 
                     }
                 Toast.makeText(c, addEntryName+addEntryRemark+addBirthday+addEntryHobbies+addEntryGender+""+addEntryBtmpPicture, Toast.LENGTH_SHORT).show();
 
                     Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
-                recyclerViewAdapter.notifyItemInserted(0);
+                recyclerViewAdapter.notifyItemInserted(entryList.size()-1);
                 layoutManager.scrollToPosition(0);
+
             }
+
+        }
+
+        if (requestCode == INDIVIDUAl_ENTRY_REQUEST_CODE && resultCode == RESULT_OK) {
+            if(data.hasExtra("addEntryName")) {
+
+            }
+
+        }
+        if (requestCode == EDIT_ENTRY_REQUEST_CODE && resultCode == RESULT_OK) {
+            //edit
+
+            if (data.hasExtra("editEntryRemark") ) {
+
+                String editEntryName = data.getStringExtra("editEntryName");
+                String editEntryRemark = data.getStringExtra("editEntryRemark");
+                String entryListPosition = data.getStringExtra("editEntryPosition");
+                String editBirthday = data.getStringExtra("editEntryBirthday");
+                String editEntryHobbies = data.getStringExtra("editEntryHobbies");
+                String editEntryGender = data.getStringExtra("editEntryGender");
+
+    //            byte[] editEntryByteArray = data.getByteArrayExtra("editEntryByteArray");
+     //           Toast.makeText(c, editEntryByteArray+"", Toast.LENGTH_SHORT).show();
+//                Bitmap editEntryBtmpPicture = BitmapFactory.decodeByteArray(editEntryByteArray, 0, editEntryByteArray.length);
+
+
+
+      //Bitmap editEntryBtmpPicture = data.getParcelableExtra("editEntryBtmpPicture");
+//                String filePath=getIntent().getStringExtra("editEntryBtmpPicture");
+//                File file = new File(filePath);
+//                Bitmap editEntryBtmpPicture = BitmapFactory.decodeFile(editFile.getAbsolutePath());
+
+//
+                Toast.makeText(c, entryListPosition+"edit works", Toast.LENGTH_SHORT).show();
+                entryList.set(Integer.parseInt(entryListPosition), new Entry(BitmapFactory.decodeResource(c.getResources(),
+                        R.drawable.coffee1), editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
+
+                Toast.makeText(c, "Item Inserted", Toast.LENGTH_SHORT).show();
+                recyclerViewAdapter.notifyDataSetChanged();
+            } else {
+                Toast.makeText(c, "edit not works", Toast.LENGTH_SHORT).show();
+            }
+
+
 
         }
     }
