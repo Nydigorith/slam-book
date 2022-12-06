@@ -319,7 +319,7 @@
                     android:id="@+id/cbTelevision"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Television"
+                    android:text="Television"
                     />
                 <CheckBox
                     android:id="@+id/cbVideoGames"

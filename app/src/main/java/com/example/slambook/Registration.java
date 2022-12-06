@@ -186,35 +186,35 @@ public class Registration extends AppCompatActivity {
                             String hobbies = "";
 
                             if (cbReading.isChecked()) {
-                                hobbies += cbReading.getText().toString() + "\n";
+                                hobbies += "\t\t\t" + cbReading.getText().toString() + "\n";
 
                             }
                             if (cbBirdWatching.isChecked()) {
-                                hobbies += cbBirdWatching.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbBirdWatching.getText().toString() + "\n";
                             }
                             if (cbCollecting.isChecked()) {
-                                hobbies += cbCollecting.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbCollecting.getText().toString() + "\n";
                             }
                             if (cbCrafting.isChecked()) {
-                                hobbies += cbCrafting.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbCrafting.getText().toString() + "\n";
                             }
                             if (cbFishing.isChecked()) {
-                                hobbies += cbFishing.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbFishing.getText().toString() + "\n";
                             }
                             if (cbTraveling.isChecked()) {
-                                hobbies += cbTraveling.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbTraveling.getText().toString() + "\n";
                             }
                             if (cbGardening.isChecked()) {
-                                hobbies += cbGardening.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbGardening.getText().toString() + "\n";
                             }
                             if (cbMusic.isChecked()) {
-                                hobbies += cbMusic.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbMusic.getText().toString() + "\n";
                             }
                             if (cbTelevision.isChecked()) {
-                                hobbies += cbTelevision.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbTelevision.getText().toString() + "\n";
                             }
                             if (cbVideoGames.isChecked()) {
-                                hobbies += cbVideoGames.getText().toString() + "\n";
+                                hobbies += "\t\t\t" +cbVideoGames.getText().toString() + "\n";
                             }
 
 
