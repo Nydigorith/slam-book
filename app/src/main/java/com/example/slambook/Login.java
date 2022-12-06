@@ -111,11 +111,11 @@ public class Login extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
 
 //                        TEST DATA
-//                        Intent intent = new Intent(c, EntryList.class);
-//                        intent.putExtra("loginFullName", "registrationFullName");
-//                        intent.putExtra("loginPicture", BitmapFactory.decodeResource(c.getResources(), R.drawable.coffee2));
+                        Intent intent = new Intent(c, EntryList.class);
+                        intent.putExtra("loginFullName", "Test Name");
+    //                    intent.putExtra("loginPicture", BitmapFactory.decodeResource(c.getResources(), R.drawable.coffee1));
 
-                        Intent intent = new Intent(c, Registration.class);
+ //                       Intent intent = new Intent(c, Registration.class);
                         startActivity(intent);
                     }
                 });

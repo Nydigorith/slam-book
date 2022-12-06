@@ -56,26 +56,7 @@ public class EditEntry extends AppCompatActivity {
     }
 
     private void intent() {
-        Intent getEntryListIntent = getIntent();
-        if (getEntryListIntent.hasExtra("loginFullName")) {
-            String loginFullName = getEntryListIntent.getStringExtra("loginFullName");
-            Bitmap loginPicture = getEntryListIntent.getParcelableExtra("loginPicture");
 
-            Intent editEntryIntent = new Intent(c, EntryList.class);
-            editEntryIntent.putExtra("loginFullName", loginFullName);
-            editEntryIntent.putExtra("loginPicture", loginPicture);
-
-
-
-
-
-
-
-
-            startActivity(editEntryIntent);
-        } else {
-            Toast.makeText(c, "ds", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void initialize() {
@@ -113,7 +94,7 @@ public class EditEntry extends AppCompatActivity {
 
         Intent getArrayListIntent = getIntent();
         if (getArrayListIntent.hasExtra("entryListRemark")) {
-
+            Bitmap individualEntryBtmpPicture = getArrayListIntent.getParcelableExtra("editEntryBtmpPicture");
             String individualEntryFullName = getArrayListIntent.getStringExtra("entryListFullName");
             String individualEntryRemark = getArrayListIntent.getStringExtra("entryListRemark");
             String individualEntryGender = getArrayListIntent.getStringExtra("entryListGender");
@@ -122,7 +103,9 @@ public class EditEntry extends AppCompatActivity {
 
             etxtName.setText(individualEntryFullName);
             etxtRemark.setText(individualEntryRemark);
-
+            Toast.makeText(c, individualEntryBtmpPicture+"", Toast.LENGTH_SHORT).show();
+ivPicture.setImageBitmap(individualEntryBtmpPicture);
+            editEntryBtmpPicture = individualEntryBtmpPicture;
             tvBirthdate.setText(individualEntryBirthday);
 
             if (individualEntryGender.equals("Male")) {
@@ -139,12 +122,40 @@ public class EditEntry extends AppCompatActivity {
                 rbOthers.setChecked(true);
                 etxtOther.setText("Others");
             }
-            //txtHobbies.setText(individualEntryHobbies);
-            //txtGender.setText(individualEntryGender);
+
+            if (individualEntryGender.equals("Others")) {
+                rbOthers.setChecked(true);
+                etxtOther.setText("Others");
+            }
+
+
+            String[] splitHobbies = individualEntryHobbies.split("\n");
+            Toast.makeText(c, splitHobbies[0] +" one " + splitHobbies[1], Toast.LENGTH_SHORT).show();
+            getHobbies(splitHobbies,cbReading,"Reading");
+            getHobbies(splitHobbies,   cbBirdWatching,"Bird Watching");
+            getHobbies(splitHobbies,  cbCollecting, "Collecting");
+            getHobbies(splitHobbies,  cbCrafting,"Crafting");
+            getHobbies(splitHobbies,    cbFishing, "Fishing");
+            getHobbies(splitHobbies,cbTraveling,"Traveling");
+            getHobbies(splitHobbies,cbGardening,"Gardening");
+            getHobbies(splitHobbies,cbMusic,"Music");
+            getHobbies(splitHobbies,cbTelevision,"Television");
+            getHobbies(splitHobbies, cbVideoGames,"Video Games");
+
+
         }
 
     }
 
+    private void getHobbies(String[] splitHobbies, CheckBox checkBox, String hobby) {
+        for(int i =0; i < splitHobbies.length; i++)
+        {
+            if(splitHobbies[i].contains(hobby))
+            {
+                checkBox.setChecked(true);
+            }
+        }
+    }
     private void process() {
         datePickerDialog = new DatePickerDialog(c, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -217,18 +228,19 @@ public class EditEntry extends AppCompatActivity {
                     if (getEntryListIntent.hasExtra("loginFullName")) {
                         String loginFullName = getEntryListIntent.getStringExtra("loginFullName");
                         Bitmap loginPicture = getEntryListIntent.getParcelableExtra("loginPicture");
-                        Bitmap entryListPosition = getEntryListIntent.getParcelableExtra("entryListPosition");
-
+                        String entryListPosition = getEntryListIntent.getStringExtra("entryListPosition");
+                        Toast.makeText(c, entryListPosition+"", Toast.LENGTH_SHORT).show();
                         Intent putEditEntryIntent = new Intent(c, EntryList.class);
                         putEditEntryIntent.putExtra("loginFullName", loginFullName);
                         putEditEntryIntent.putExtra("loginPicture", loginPicture);
-                        putEditEntryIntent.putExtra("entryListPosition", entryListPosition);
+                        putEditEntryIntent.putExtra("editEntryPosition", entryListPosition);
                         putEditEntryIntent.putExtra("editEntryBirthday", editEntryBirthdate);
                         putEditEntryIntent.putExtra("editEntryHobbies", hobbies);
                         putEditEntryIntent.putExtra("editEntryGender", editEntryGender);
                         putEditEntryIntent.putExtra("editEntryName", editEntryName);
                         putEditEntryIntent.putExtra("editEntryRemark", editEntryRemark);
                         putEditEntryIntent.putExtra("editEntryBtmpPicture", editEntryBtmpPicture);
+                        Toast.makeText(c, editEntryName+"", Toast.LENGTH_SHORT).show();
                         startActivity(putEditEntryIntent);
                     }
                 }
@@ -238,7 +250,38 @@ public class EditEntry extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent();
+                //intent();
+                Intent getArrayListIntent = getIntent();
+                if (getArrayListIntent.hasExtra("entryListRemark")) {
+
+                    String individualEntryFullName = getArrayListIntent.getStringExtra("entryListFullName");
+                    String individualEntryRemark = getArrayListIntent.getStringExtra("entryListRemark");
+                    String individualEntryGender = getArrayListIntent.getStringExtra("entryListGender");
+                    String individualEntryHobbies = getArrayListIntent.getStringExtra("entryListHobbies");
+                    String individualEntryBirthday = getArrayListIntent.getStringExtra("entryListBirthday");
+
+
+                    Intent putEditEntryIntent = new Intent(c, EntryList.class);
+
+                        String loginFullName = getArrayListIntent.getStringExtra("loginFullName");
+                        Bitmap loginPicture = getArrayListIntent.getParcelableExtra("loginPicture");
+                        String entryListPosition = getArrayListIntent.getStringExtra("entryListPosition");
+
+                    putEditEntryIntent.putExtra("loginFullName", loginFullName);
+                    putEditEntryIntent.putExtra("loginPicture", loginPicture);
+
+                    putEditEntryIntent.putExtra("editEntryPosition", entryListPosition);
+                    putEditEntryIntent.putExtra("editEntryBirthday", individualEntryBirthday);
+                    putEditEntryIntent.putExtra("editEntryHobbies", individualEntryHobbies);
+                    putEditEntryIntent.putExtra("editEntryGender", individualEntryGender);
+                    putEditEntryIntent.putExtra("editEntryName", individualEntryFullName);
+                    putEditEntryIntent.putExtra("editEntryRemark", individualEntryRemark);
+                    putEditEntryIntent.putExtra("editEntryCancel", "1");
+                    putEditEntryIntent.putExtra("editEntryBtmpPicture", editEntryBtmpPicture);
+                    Toast.makeText(c, individualEntryFullName+"", Toast.LENGTH_SHORT).show();
+                        startActivity(putEditEntryIntent);
+
+                }
             }
         });
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
