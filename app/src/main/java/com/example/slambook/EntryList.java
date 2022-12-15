@@ -91,11 +91,25 @@ Bitmap currentEntryPicture;
 
   //      displayed by default
             entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-                    R.drawable.coffee2), "1", "dsdsa", "Fishing\nCollecting", "Male", "dsdsa"));
+                    R.drawable.luffy), "Luffy", "Strawhat pirate", "Eating\nFighting", "Male", "May 5, 2022"));
             entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-                    R.drawable.coffee2), "2", "dsdsa2", "Fishing\nCollecting", "Female", "dsdsa"));
+                    R.drawable.zoro), "Zoro", "Strawhat pirate", "Lifting\nFighting", "Male", "November 11, 2022"));
             entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
-                    R.drawable.coffee2), "3", "dsdsa2", "Fishing\nCollecting", "Others", "dsdsa"));
+                    R.drawable.nami), "Nami", "Strawhat pirate", "Shopping\nEating", "Female", "July 3, 2022"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.ussop), "Usopp", "Strawhat pirate", "Shooting\nEating", "Male", "April 1, 2022"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.sanji), "Sanji", "Strawhat pirate", "Cooking\nFighting", "Male", "March 2, 2022"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.chopper), "Chopper", "Strawhat pirate", "Reading\nEating", "Male", "December 24, 2022"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.robin), "Robin", "Strawhat pirate", "Reading\nTraveling", "Female", "February 6, 2022"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.franky), "Franky", "Strawhat pirate", "Crafting\nTraveling", "Male", "March 9, 2022"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.brook), "Brook", "Strawhat pirate", "Singing\nEating", "Male", "April 3, 2022"));
+            entryList.add(new Entry(BitmapFactory.decodeResource(c.getResources(),
+                    R.drawable.jinbei), "Jinbe", "Strawhat pirate", "Traveling\nFighting", "Male", "April 2, 2022"));
 
 
 
@@ -240,7 +254,7 @@ Bitmap currentEntryPicture;
 
                     } else {
                         entryList.add( new Entry(BitmapFactory.decodeResource(c.getResources(),
-                                R.drawable.no_picture), addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
+                                R.drawable.no_icon), addEntryName, addEntryRemark, addEntryHobbies, addEntryGender, addBirthday));
 
                     }
 

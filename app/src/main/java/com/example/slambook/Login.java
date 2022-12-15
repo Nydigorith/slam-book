@@ -103,6 +103,7 @@ public class Login extends AppCompatActivity {
                 builder.setTitle("Register").setMessage("You will be redirected to registration").setCancelable(false).setPositiveButton("CONTINUE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
 //                        TEST DATA
 //                        Intent intent = new Intent(c, EntryList.class);
  //                       intent.putExtra("loginFullName", "Test Name");

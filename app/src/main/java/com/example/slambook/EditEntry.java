@@ -161,7 +161,17 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
                 String editEntryRemark = etxtRemark.getText().toString();
                 String editEntryBirthdate = tvBirthdate.getText().toString();
                 String addEntryHobbies = etxtHobbies.getText().toString();
-                String editEntryGender = etxtOther.getText().toString();
+                String editEntryGender = "";
+
+                //radio button
+                if(rbMale.isChecked()){
+                    editEntryGender = "Male";
+                }else if(rbFemale.isChecked()){
+                    editEntryGender = "Female";
+                }else if (rbOthers.isChecked()){
+                    editEntryGender = etxtOther.getText().toString();
+                }
+
                 if (editEntryName.equals("") || addEntryHobbies.equals("") || editEntryRemark.equals("") ||
                         editEntryBirthdate.equals("") || editEntryGender.equals("") || editEntryBirthdate.equals("Date of Birth")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -227,14 +237,16 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
     View.OnClickListener getRadio = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            RadioButton rb = (RadioButton) v;
 
-            if (v.getId() == R.id.rbMale) {
-                etxtOther.setText("Male");
-            } else if (rb.getId() == R.id.rbFemale) {
-                etxtOther.setText("Female");
-            } else if (rb.getId() == R.id.rbOthers) {
-                etxtOther.setText("Others");
+
+            if (rbMale.isChecked()) {
+                etxtOther.setVisibility(View.GONE);
+                etxtOther.setText(null);
+            } else if (rbFemale.isChecked()) {
+                etxtOther.setVisibility(View.GONE);
+                etxtOther.setText(null);
+            } else if (rbOthers.isChecked()) {
+                etxtOther.setVisibility(View.VISIBLE);
             }
 
         }

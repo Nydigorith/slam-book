@@ -103,8 +103,18 @@ public class AddEntry extends AppCompatActivity {
                 String addEntryName = etxtName.getText().toString();
                 String addEntryRemark = etxtRemark.getText().toString();
                 String addEntryBirthdate = tvBirthdate.getText().toString();
-                String addEntryGender = etxtOther.getText().toString();
                 String addEntryHobbies = etxtHobbies.getText().toString();
+                String addEntryGender = "";
+
+                //radio button
+                if(rbMale.isChecked()){
+                    addEntryGender = "Male";
+                }else if(rbFemale.isChecked()){
+                    addEntryGender = "Female";
+                }else if (rbOthers.isChecked()){
+                    addEntryGender = etxtOther.getText().toString();
+                }
+
                 if ( addEntryName.equals("") || addEntryHobbies.equals("") || addEntryRemark.equals("") ||
                         addEntryBirthdate.equals("") || addEntryGender.equals("") || addEntryBirthdate.equals("Date of Birth")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -119,7 +129,6 @@ public class AddEntry extends AppCompatActivity {
 
 
                         Intent putAddEntryIntent = new Intent();
-
 
                         putAddEntryIntent.putExtra("addEntryBirthday", addEntryBirthdate);
                         putAddEntryIntent.putExtra("addEntryHobbies", addEntryHobbies);
@@ -165,14 +174,15 @@ public class AddEntry extends AppCompatActivity {
     View.OnClickListener getRadio = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            RadioButton rb = (RadioButton) v;
 
-            if (v.getId() == R.id.rbMale) {
-                etxtOther.setText("Male");
-            } else if (rb.getId() == R.id.rbFemale) {
-                etxtOther.setText("Female");
-            } else if (rb.getId() == R.id.rbOthers) {
-                etxtOther.setText("Others");
+            if (rbMale.isChecked()) {
+                etxtOther.setVisibility(View.GONE);
+                etxtOther.setText(null);
+            } else if (rbFemale.isChecked()) {
+                etxtOther.setVisibility(View.GONE);
+                etxtOther.setText(null);
+            } else if (rbOthers.isChecked()) {
+                etxtOther.setVisibility(View.VISIBLE);
             }
 
         }
