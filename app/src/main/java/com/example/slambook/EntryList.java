@@ -288,10 +288,8 @@ Bitmap currentEntryPicture;
 
                 if (editEntryPicture != null) {
                     entryList.set(Integer.parseInt(entryListPosition), new Entry(editEntryPicture, editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
-
                 } else {
                     entryList.set(Integer.parseInt(entryListPosition), new Entry(currentEntryPicture, editEntryName, editEntryRemark, editEntryHobbies, editEntryGender, editBirthday));
-
                 }
 
                // Toast.makeText(c, "Item Edited", Toast.LENGTH_SHORT).show();
