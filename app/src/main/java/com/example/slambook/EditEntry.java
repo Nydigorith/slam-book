@@ -37,10 +37,10 @@ public class EditEntry extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView ivPicture;
     TextView tvBirthdate;
-    EditText etxtName, etxtRemark, etxtOther;
+    EditText etxtName, etxtRemark, etxtOther,etxtHobbies;
     RadioGroup rgGender;
     RadioButton rbMale, rbFemale, rbOthers;
-    CheckBox cbReading, cbTraveling, cbFishing, cbCrafting, cbTelevision, cbBirdWatching, cbCollecting, cbMusic, cbGardening, cbVideoGames;
+
     String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
     DatePickerDialog datePickerDialog;
@@ -64,6 +64,7 @@ String entryPosition ;
 
     private void initialize() {
         tvBirthdate = findViewById(R.id.tvBirthdate);
+        etxtHobbies = findViewById(R.id.etxtHobbies);
         etxtName = findViewById(R.id.etxtName);
         etxtRemark = findViewById(R.id.etxtRemark);
         btnCancel = findViewById(R.id.btnCancel);
@@ -74,17 +75,7 @@ String entryPosition ;
         rbMale = findViewById(R.id.rbMale);
         rbFemale = findViewById(R.id.rbFemale);
         rbOthers = findViewById(R.id.rbOthers);
-        cbReading = findViewById(R.id.cbReading);
-        cbTraveling = findViewById(R.id.cbTraveling);
-        cbFishing = findViewById(R.id.cbFishing);
-        cbCrafting = findViewById(R.id.cbCrafting);
-        cbTelevision = findViewById(R.id.cbTelevision);
-        cbBirdWatching = findViewById(R.id.cbBirdWatching);
-        cbCollecting = findViewById(R.id.cbCollecting);
-        cbMusic = findViewById(R.id.cbMusic);
-        cbGardening = findViewById(R.id.cbGardening);
-        cbVideoGames = findViewById(R.id.cbVideoGames);
-        cbGardening = findViewById(R.id.cbGardening);
+
 
         ivPicture = findViewById(R.id.ivPicture);
         btnTakePicture = findViewById(R.id.btnTakePicture);
@@ -106,15 +97,13 @@ String entryPosition ;
             String entryListPosition = getArrayListIntent.getStringExtra("entryListPosition");
             entryPosition=entryListPosition;
 
-            Toast.makeText(c, entryListPosition+" POS", Toast.LENGTH_SHORT).show();
+
             String pictureFilePath=getIntent().getStringExtra("entryListPicture");
             File file = new File(pictureFilePath);
             Bitmap individualEntryBtmpPicture = BitmapFactory.decodeFile(file.getAbsolutePath());
 
 ivPicture.setImageBitmap(individualEntryBtmpPicture);
-           // editEntryBtmpPicture = individualEntryBtmpPicture;
-
-
+            etxtHobbies.setText(individualEntryHobbies);
             etxtName.setText(individualEntryFullName);
             etxtRemark.setText(individualEntryRemark);
             tvBirthdate.setText(individualEntryBirthday);
@@ -142,31 +131,13 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
 
             String[] splitHobbies = individualEntryHobbies.split("\n");
 
-            getHobbies(splitHobbies,cbReading,"Reading");
-            getHobbies(splitHobbies,   cbBirdWatching,"Bird Watching");
-            getHobbies(splitHobbies,  cbCollecting, "Collecting");
-            getHobbies(splitHobbies,  cbCrafting,"Crafting");
-            getHobbies(splitHobbies,    cbFishing, "Fishing");
-            getHobbies(splitHobbies,cbTraveling,"Traveling");
-            getHobbies(splitHobbies,cbGardening,"Gardening");
-            getHobbies(splitHobbies,cbMusic,"Music");
-            getHobbies(splitHobbies,cbTelevision,"Television");
-            getHobbies(splitHobbies, cbVideoGames,"Video Games");
+
 
 
         }
 
     }
 
-    private void getHobbies(String[] splitHobbies, CheckBox checkBox, String hobby) {
-        for(int i =0; i < splitHobbies.length; i++)
-        {
-            if(splitHobbies[i].contains(hobby))
-            {
-                checkBox.setChecked(true);
-            }
-        }
-    }
     private void process() {
         datePickerDialog = new DatePickerDialog(c, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -189,11 +160,22 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
                 String editEntryName = etxtName.getText().toString();
                 String editEntryRemark = etxtRemark.getText().toString();
                 String editEntryBirthdate = tvBirthdate.getText().toString();
-                String editEntryGender = etxtOther.getText().toString();
-                if (!(cbReading.isChecked() || cbBirdWatching.isChecked() || cbCollecting.isChecked() || cbCrafting.isChecked() || cbFishing.isChecked() || cbTraveling.isChecked() || cbGardening.isChecked() || cbMusic.isChecked() || cbTelevision.isChecked() || cbVideoGames.isChecked()) || editEntryName.equals("") || editEntryRemark.equals("") ||
+                String addEntryHobbies = etxtHobbies.getText().toString();
+                String editEntryGender = "";
+
+                //radio button
+                if(rbMale.isChecked()){
+                    editEntryGender = "Male";
+                }else if(rbFemale.isChecked()){
+                    editEntryGender = "Female";
+                }else if (rbOthers.isChecked()){
+                    editEntryGender = etxtOther.getText().toString();
+                }
+
+                if (editEntryName.equals("") || addEntryHobbies.equals("") || editEntryRemark.equals("") ||
                         editEntryBirthdate.equals("") || editEntryGender.equals("") || editEntryBirthdate.equals("Date of Birth")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                    builder.setTitle("Attention").setMessage("Answer reqquired fields ").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                    builder.setTitle("Attention").setMessage("Answer all the required fields").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                         }
@@ -201,45 +183,11 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    String hobbies = "";
-
-                    if (cbReading.isChecked()) {
-                        hobbies += cbReading.getText().toString() + "\n";
-
-                    }
-                    if (cbBirdWatching.isChecked()) {
-                        hobbies += cbBirdWatching.getText().toString() + "\n";
-                    }
-                    if (cbCollecting.isChecked()) {
-                        hobbies += cbCollecting.getText().toString() + "\n";
-                    }
-                    if (cbCrafting.isChecked()) {
-                        hobbies += cbCrafting.getText().toString() + "\n";
-                    }
-                    if (cbFishing.isChecked()) {
-                        hobbies += cbFishing.getText().toString() + "\n";
-                    }
-                    if (cbTraveling.isChecked()) {
-                        hobbies += cbTraveling.getText().toString() + "\n";
-                    }
-                    if (cbGardening.isChecked()) {
-                        hobbies += cbGardening.getText().toString() + "\n";
-                    }
-                    if (cbMusic.isChecked()) {
-                        hobbies += cbMusic.getText().toString() + "\n";
-                    }
-                    if (cbTelevision.isChecked()) {
-                        hobbies += cbTelevision.getText().toString() + "\n";
-                    }
-                    if (cbVideoGames.isChecked()) {
-                        hobbies += cbVideoGames.getText().toString() + "\n";
-                    }
-
 
                     Intent putEditEntryIntent = new Intent();
 
                  putEditEntryIntent.putExtra("editEntryBirthday", editEntryBirthdate);
-                    putEditEntryIntent.putExtra("editEntryHobbies", hobbies);
+                    putEditEntryIntent.putExtra("editEntryHobbies", addEntryHobbies);
                     putEditEntryIntent.putExtra("editEntryGender", editEntryGender);
                     putEditEntryIntent.putExtra("editEntryPosition", entryPosition);
 
@@ -289,14 +237,16 @@ ivPicture.setImageBitmap(individualEntryBtmpPicture);
     View.OnClickListener getRadio = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            RadioButton rb = (RadioButton) v;
 
-            if (v.getId() == R.id.rbMale) {
-                etxtOther.setText("Male");
-            } else if (rb.getId() == R.id.rbFemale) {
-                etxtOther.setText("Female");
-            } else if (rb.getId() == R.id.rbOthers) {
-                etxtOther.setText("Others");
+
+            if (rbMale.isChecked()) {
+                etxtOther.setVisibility(View.GONE);
+                etxtOther.setText(null);
+            } else if (rbFemale.isChecked()) {
+                etxtOther.setVisibility(View.GONE);
+                etxtOther.setText(null);
+            } else if (rbOthers.isChecked()) {
+                etxtOther.setVisibility(View.VISIBLE);
             }
 
         }

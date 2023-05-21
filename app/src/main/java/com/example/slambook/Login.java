@@ -65,13 +65,13 @@ public class Login extends AppCompatActivity {
                             putLoginIntent.putExtra("loginPicture", registrationPicture);
                             startActivity(putLoginIntent);
 
-                            Toast.makeText(c, "success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(c, "Login Successful", Toast.LENGTH_SHORT).show();
                         } else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                            builder.setTitle("Login")
-                                    .setMessage("Username or Password is incorrect")
+                            builder.setTitle("Attention")
+                                    .setMessage("Incorrect username or password")
                                     .setCancelable(true)
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                         }
@@ -81,10 +81,10 @@ public class Login extends AppCompatActivity {
                         }
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                        builder.setTitle("Login")
-                                .setMessage("Username or Password is incorrect")
+                        builder.setTitle("Attention")
+                                .setMessage("Incorrect username or password")
                                 .setCancelable(true)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
@@ -100,16 +100,16 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                builder.setTitle("Register").setMessage("You will be redirected to Registration Page").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                builder.setTitle("Register").setMessage("You will be redirected to registration").setCancelable(false).setPositiveButton("CONTINUE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
 //                        TEST DATA
-                        Intent intent = new Intent(c, EntryList.class);
-                        intent.putExtra("loginFullName", "Test Name");
-    //                    intent.putExtra("loginPicture", BitmapFactory.decodeResource(c.getResources(), R.drawable.coffee1));
+//                        Intent intent = new Intent(c, EntryList.class);
+ //                       intent.putExtra("loginFullName", "Test Name");
+    //                   intent.putExtra("loginPicture", BitmapFactory.decodeResource(c.getResources(), R.drawable.coffee1));
 
- //                       Intent intent = new Intent(c, Registration.class);
+                        Intent intent = new Intent(c, Registration.class);
                         startActivity(intent);
                     }
                 });

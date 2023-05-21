@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -38,7 +39,7 @@ public class Registration extends AppCompatActivity {
     CheckBox cbReading, cbTraveling, cbFishing, cbCrafting, cbTelevision, cbBirdWatching, cbCollecting, cbMusic, cbGardening, cbVideoGames;
     Spinner sprQuestion1, sprQuestion2, sprQuestion3;
     DatePickerDialog datePickerDialog;
-    Button btnSubmit, btnTakePicture;
+    Button btnSubmit, btnTakePicture, btnBack;
     Bitmap btmpPicture;
 
     Calendar currentDate = Calendar.getInstance();
@@ -63,14 +64,17 @@ public class Registration extends AppCompatActivity {
         etxtConfirmPassword = findViewById(R.id.etxtConfirmPassword);
         etxtFirstName = findViewById(R.id.etxtFirstName);
         etxtLastName = findViewById(R.id.etxtLastName);
-        etxtMiddleName = findViewById(R.id.etxtMiddleName);
+
         etxtEmailAddress = findViewById(R.id.etxtEmailAddress);
 
-        etxtBarangayAddress = findViewById(R.id.etxtBarangayAddress);
-        etxtStreetAddress = findViewById(R.id.etxtStreetAddress);
-        etxtNumberAddress = findViewById(R.id.etxtNumberAddress);
-        etxtMunicipalityAddress = findViewById(R.id.etxtMunicipalityAddress);
-        etxtProvinceAddress = findViewById(R.id.etxtProvinceAddress);
+        etxtAddress = findViewById(R.id.etxtAddress);
+
+//        etxtMiddleName = findViewById(R.id.etxtMiddleName);
+//        etxtBarangayAddress = findViewById(R.id.etxtBarangayAddress);
+//        etxtStreetAddress = findViewById(R.id.etxtStreetAddress);
+//        etxtNumberAddress = findViewById(R.id.etxtNumberAddress);
+//        etxtMunicipalityAddress = findViewById(R.id.etxtMunicipalityAddress);
+//        etxtProvinceAddress = findViewById(R.id.etxtProvinceAddress);
 
         etxtContact = findViewById(R.id.etxtContact);
         etxtOther = findViewById(R.id.etxtOther);
@@ -93,6 +97,7 @@ public class Registration extends AppCompatActivity {
         sprQuestion2 = findViewById(R.id.sprQuestion2);
         sprQuestion3 = findViewById(R.id.sprQuestion3);
         btnSubmit = findViewById(R.id.btnSubmit);
+        btnBack = findViewById(R.id.btnBack);
         ivPicture = findViewById(R.id.ivPicture);
         btnTakePicture = findViewById(R.id.btnTakePicture);
 
@@ -141,26 +146,36 @@ public class Registration extends AppCompatActivity {
                 String password = etxtPassword.getText().toString();
                 String confirmPassword = etxtConfirmPassword.getText().toString();
                 String firstName = etxtFirstName.getText().toString();
-                String middleName = etxtMiddleName.getText().toString();
+//                String middleName = etxtMiddleName.getText().toString();
                 String lastName = etxtLastName.getText().toString();
                 String email = etxtEmailAddress.getText().toString();
                 String birthdate = tvBirthdate.getText().toString();
 
-                String barangay = etxtBarangayAddress.getText().toString();
-                String street = etxtStreetAddress.getText().toString();
-                String number = etxtNumberAddress.getText().toString();
-                String municipality = etxtMunicipalityAddress.getText().toString();
-                String province = etxtProvinceAddress.getText().toString();
+                String address = etxtAddress.getText().toString();
+//                String barangay = etxtBarangayAddress.getText().toString();
+//                String street = etxtStreetAddress.getText().toString();
+//                String number = etxtNumberAddress.getText().toString();
+//                String municipality = etxtMunicipalityAddress.getText().toString();
+//                String province = etxtProvinceAddress.getText().toString();
 
                 String answer1 = sprAnswer1.getText().toString();
                 String answer2 = sprAnswer2.getText().toString();
                 String answer3 = sprAnswer3.getText().toString();
 
                 String contact = etxtContact.getText().toString();
-                String gender = etxtOther.getText().toString();
+                String gender = "";
+
+                //radio button
+                if(rbMale.isChecked()){
+                    gender = "Male";
+                }else if(rbFemale.isChecked()){
+                    gender = "Female";
+                }else if (rbOthers.isChecked()){
+                    gender = etxtOther.getText().toString();
+                }
 
                 if (!(cbReading.isChecked() || cbBirdWatching.isChecked() || cbCollecting.isChecked() || cbCrafting.isChecked() || cbFishing.isChecked() || cbTraveling.isChecked() || cbGardening.isChecked() || cbMusic.isChecked() || cbTelevision.isChecked() || cbVideoGames.isChecked()) || username.equals("") || password.equals("") || confirmPassword.equals("") || firstName.equals("") ||
-                        lastName.equals("") || middleName.equals("") || email.equals("") || birthdate.equals("") || barangay.equals("") || street.equals("") || number.equals("") || municipality.equals("") || province.equals("") || answer1.equals("") || answer2.equals("") || answer3.equals("") ||
+                        lastName.equals("") || email.equals("") || birthdate.equals("") || address.equals("") || answer1.equals("") || answer2.equals("") || answer3.equals("") ||
                         contact.equals("") || gender.equals("") || birthdate.equals("Date of Birth") || ivPicture.getDrawable() == null) {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -182,73 +197,72 @@ public class Registration extends AppCompatActivity {
                         } else if (sprQuestion2.getSelectedItemPosition() == sprQuestion3.getSelectedItemPosition()) {
                             sprSameQuestionAlert();
                         } else {
+
                             //checkboxes
                             String hobbies = "";
 
                             if (cbReading.isChecked()) {
-                                hobbies += cbReading.getText().toString() + "\n";
-
+                                hobbies += "\t\t" + cbReading.getText().toString() + "\n";
                             }
                             if (cbBirdWatching.isChecked()) {
-                                hobbies += cbBirdWatching.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbBirdWatching.getText().toString() + "\n";
                             }
                             if (cbCollecting.isChecked()) {
-                                hobbies += cbCollecting.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbCollecting.getText().toString() + "\n";
                             }
                             if (cbCrafting.isChecked()) {
-                                hobbies += cbCrafting.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbCrafting.getText().toString() + "\n";
                             }
                             if (cbFishing.isChecked()) {
-                                hobbies += cbFishing.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbFishing.getText().toString() + "\n";
                             }
                             if (cbTraveling.isChecked()) {
-                                hobbies += cbTraveling.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbTraveling.getText().toString() + "\n";
                             }
                             if (cbGardening.isChecked()) {
-                                hobbies += cbGardening.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbGardening.getText().toString() + "\n";
                             }
                             if (cbMusic.isChecked()) {
-                                hobbies += cbMusic.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbMusic.getText().toString() + "\n";
                             }
                             if (cbTelevision.isChecked()) {
-                                hobbies += cbTelevision.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbTelevision.getText().toString() + "\n";
                             }
                             if (cbVideoGames.isChecked()) {
-                                hobbies += cbVideoGames.getText().toString() + "\n";
+                                hobbies += "\t\t" +cbVideoGames.getText().toString() + "\n";
                             }
 
 
                             String information = "";
 
-
                             information += "Username: " + username + "\n";
                             information += "Password: " + password + "\n";
 
-                            information += "Naeme: " + firstName + " " + middleName + " " + lastName +"\n";
+                            information += "Name: " + firstName + " " + lastName +"\n";
                             information += "Email: " + email + "\n";
-                            information += "Birthdday: " + birthdate + "\n";
+                            information += "Birthday: " + birthdate + "\n";
 
-                            information += "Gender: " + etxtOther.getText().toString() + "\n";
-                            information += "Address: " + number +" " + street  +", " + barangay  +", " + municipality  +", " + province + "\n";
-                            information += "Contact: " + contact + "\n";
-                            information += "Hobbies:\n " + hobbies + "\n";
+                            information += "Gender: " + gender + "\n";
+                            information += "Address: " + address + "\n";
+                            information += "Contact: " + contact + "\n\n";
+                            information += "Hobbies: " + "\n"+ hobbies + "\n";
                             information += "Q1: " + sprQuestion1.getSelectedItem().toString() + "\n";
-                            information += "A1: " + answer1+ "\n";
+                            information += "A1: " + answer1+ "\n\n";
 
                             information += "Q2: " + sprQuestion2.getSelectedItem().toString() + "\n";
-                            information += "A2: " + answer2 + "\n";
+                            information += "A2: " + answer2 + "\n\n";
 
                             information += "Q3: " + sprQuestion3.getSelectedItem().toString() + "\n";
-                            information += "A3: " + answer3 + "\n";
+                            information += "A3: " + answer3 + "\n\n";
 
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                            builder.setTitle("Register").setMessage(information).setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                            builder.setTitle("All Information").setMessage(information).setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(c, "Registration was Successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(c, "Registration successful", Toast.LENGTH_SHORT).show();
                                     Intent putRegistrationIntent = new Intent(c, Login.class);
-                                    putRegistrationIntent.putExtra("registrationFullName", firstName + " " + middleName + " " + lastName);
+                                    putRegistrationIntent.putExtra("registrationFullName", firstName + " " + lastName);
                                     putRegistrationIntent.putExtra("registrationUsername", username);
                                     putRegistrationIntent.putExtra("registrationPassword", password);
                                     putRegistrationIntent.putExtra("registrationPicture", btmpPicture);
@@ -261,7 +275,7 @@ public class Registration extends AppCompatActivity {
 
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-                        builder.setTitle("Attention").setMessage("Password did not match").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
+                        builder.setTitle("Attention").setMessage("Password do not match").setCancelable(false).setPositiveButton("OKAY", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -283,6 +297,27 @@ public class Registration extends AppCompatActivity {
             }
         });
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(c);
+                builder.setTitle("Attention").setMessage("Are you sure you want to go back?").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(c, Login.class);
+                        startActivity(intent);
+                    }
+                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+
 
     }
 
@@ -296,8 +331,6 @@ public class Registration extends AppCompatActivity {
             btmpPicture = imageBitmap;
         }
     }
-
-
 
     void sprSameQuestionAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
@@ -314,14 +347,15 @@ public class Registration extends AppCompatActivity {
     View.OnClickListener getRadio = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            RadioButton rb = (RadioButton) v;
 
-            if (v.getId() == R.id.rbMale) {
-                etxtOther.setText("Male");
-            } else if (rb.getId() == R.id.rbFemale) {
-                etxtOther.setText("Female");
-            } else if (rb.getId() == R.id.rbOthers) {
-                etxtOther.setText("Others");
+            if (rbMale.isChecked()) {
+                etxtOther.setVisibility(View.GONE);
+                etxtOther.setText(null);
+            } else if (rbFemale.isChecked()) {
+                etxtOther.setVisibility(View.GONE);
+                etxtOther.setText(null);
+            } else if (rbOthers.isChecked()) {
+                etxtOther.setVisibility(View.VISIBLE);
             }
 
         }
